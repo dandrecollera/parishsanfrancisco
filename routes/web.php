@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\EmailTest;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/test', [EmailTest::class, 'index'])->name('TestEmail');
+
+// Login and Register
+Route::get('/', [LoginController::class, 'index'])->name('LoginScreen');
+Route::get('/register', [LoginController::class, 'register'])->name('RegisterScreen');
+Route::get('/getMunicipality/{province}', [LoginController::class, 'getMunicipality'])->name('GetMunicipality');
+
