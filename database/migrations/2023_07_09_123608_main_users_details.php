@@ -23,7 +23,7 @@ class MainUsersDetails extends Migration
             $table->date('birthdate');
             $table->string('gender');
             $table->string('province');
-            $table->string('city');
+            $table->string('municipality');
             $table->string('mobilenumber');
             $table->timestamps();
 

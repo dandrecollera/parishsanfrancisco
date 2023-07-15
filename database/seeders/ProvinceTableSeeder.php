@@ -14,418 +14,413 @@ class ProvinceTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('province')->delete();
-        
+
         \DB::table('province')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'province_name' => 'Rizal',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'province_name' => 'Abra',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'province_name' => 'Agusan del Norte',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'province_name' => 'Agusan del Sur',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'province_name' => 'Aklan',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'province_name' => 'Albay',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'province_name' => 'Antique',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'province_name' => 'Apayao',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'province_name' => 'Aurora',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 11,
                 'province_name' => 'Bataan',
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 12,
                 'province_name' => 'Basilan',
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 13,
                 'province_name' => 'Batanes',
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 14,
                 'province_name' => 'Batangas',
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 15,
                 'province_name' => 'Benguet',
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 16,
                 'province_name' => 'Biliran',
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 17,
                 'province_name' => 'Bohol',
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 18,
                 'province_name' => 'Bukidnon',
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 19,
                 'province_name' => 'Bulacan',
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 20,
                 'province_name' => 'Cagayan',
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 21,
                 'province_name' => 'Camarines Norte',
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 22,
                 'province_name' => 'Camarines Sur',
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 23,
                 'province_name' => 'Camiguin',
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 24,
                 'province_name' => 'Capiz',
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 25,
                 'province_name' => 'Catanduanes',
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 26,
                 'province_name' => 'Cavite',
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 27,
                 'province_name' => 'Cebu',
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 28,
                 'province_name' => 'Cotabato',
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 29,
                 'province_name' => 'Davao de Oro',
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 30,
                 'province_name' => 'Davao del Norte',
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 31,
                 'province_name' => 'Davao del Sur',
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 32,
                 'province_name' => 'Davao Occidental',
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 33,
                 'province_name' => 'Davao Oriental',
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 34,
                 'province_name' => 'Dinagat Islands',
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 35,
                 'province_name' => 'Eastern Samar',
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 36,
                 'province_name' => 'Guimaras',
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 37,
                 'province_name' => 'Ifugao',
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 38,
                 'province_name' => 'Ilocos Norte',
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 39,
                 'province_name' => 'Ilocos Sur',
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 40,
                 'province_name' => 'Iloilo',
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 41,
                 'province_name' => 'Isabela',
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 42,
                 'province_name' => 'Kalinga',
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 43,
                 'province_name' => 'La Union',
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 44,
                 'province_name' => 'Laguna',
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 45,
                 'province_name' => 'Lanao del Norte',
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 46,
                 'province_name' => 'Lanao del Sur',
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 47,
                 'province_name' => 'Leyte',
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 48,
                 'province_name' => 'Maguindanao',
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 49,
                 'province_name' => 'Marinduque',
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 50,
                 'province_name' => 'Masbate',
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 51,
                 'province_name' => 'Misamis Occidental',
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 52,
                 'province_name' => 'Misamis Oriental',
             ),
-            51 => 
+            51 =>
             array (
                 'id' => 53,
                 'province_name' => 'Mountain',
             ),
-            52 => 
+            52 =>
             array (
                 'id' => 54,
                 'province_name' => 'NCR',
             ),
-            53 => 
+            53 =>
             array (
                 'id' => 55,
                 'province_name' => 'Negros Occidental',
             ),
-            54 => 
+            54 =>
             array (
                 'id' => 56,
                 'province_name' => 'Negros Oriental',
             ),
-            55 => 
+            55 =>
             array (
                 'id' => 57,
                 'province_name' => 'Northern Samar',
             ),
-            56 => 
+            56 =>
             array (
                 'id' => 58,
                 'province_name' => 'Nueva Ecija',
             ),
-            57 => 
+            57 =>
             array (
                 'id' => 59,
                 'province_name' => 'Nueva Vizcaya',
             ),
-            58 => 
+            58 =>
             array (
                 'id' => 60,
                 'province_name' => 'Occidental Mindoro',
             ),
-            59 => 
+            59 =>
             array (
                 'id' => 61,
                 'province_name' => 'Palawan',
             ),
-            60 => 
+            60 =>
             array (
                 'id' => 62,
                 'province_name' => 'Pampanga',
             ),
-            61 => 
+            61 =>
             array (
                 'id' => 63,
                 'province_name' => 'Pangasinan',
             ),
-            62 => 
+            62 =>
             array (
                 'id' => 64,
                 'province_name' => 'Quezon',
             ),
-            63 => 
+            63 =>
             array (
                 'id' => 65,
                 'province_name' => 'Quirino',
             ),
-            64 => 
+            64 =>
             array (
                 'id' => 66,
                 'province_name' => 'Romblon',
             ),
-            65 => 
+            65 =>
             array (
                 'id' => 67,
                 'province_name' => 'Samar',
             ),
-            66 => 
+            66 =>
             array (
                 'id' => 68,
                 'province_name' => 'Sarangani',
             ),
-            67 => 
+            67 =>
             array (
                 'id' => 69,
                 'province_name' => 'Siquijor',
             ),
-            68 => 
+            68 =>
             array (
                 'id' => 70,
                 'province_name' => 'South Cotabato',
             ),
-            69 => 
+            69 =>
             array (
                 'id' => 71,
                 'province_name' => 'Southern Leyte',
             ),
-            70 => 
+            70 =>
             array (
                 'id' => 72,
                 'province_name' => 'Sultan Kudarat',
             ),
-            71 => 
+            71 =>
             array (
                 'id' => 73,
                 'province_name' => 'Sulu',
             ),
-            72 => 
+            72 =>
             array (
                 'id' => 74,
                 'province_name' => 'Surigao del Norte',
             ),
-            73 => 
+            73 =>
             array (
                 'id' => 75,
                 'province_name' => 'Surigao del Sur',
             ),
-            74 => 
+            74 =>
             array (
                 'id' => 76,
                 'province_name' => 'Tarlac',
             ),
-            75 => 
+            75 =>
             array (
                 'id' => 77,
                 'province_name' => 'Tawi-Tawi',
             ),
-            76 => 
+            76 =>
             array (
                 'id' => 78,
                 'province_name' => 'Zambales',
             ),
-            77 => 
+            77 =>
             array (
                 'id' => 79,
                 'province_name' => 'Zamboanga del Norte',
             ),
-            78 => 
+            78 =>
             array (
                 'id' => 80,
                 'province_name' => 'Zamboanga del Sur',
             ),
-            79 => 
+            79 =>
             array (
                 'id' => 81,
                 'province_name' => 'Zamboanga Sibugay',
             ),
-            80 => 
-            array (
-                'id' => 82,
-                'province_name' => 'province_name',
-            ),
         ));
-        
-        
+
+
     }
 }

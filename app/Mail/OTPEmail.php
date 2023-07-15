@@ -16,9 +16,10 @@ class OTPEmail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $code)
     {
-
+        $this->user = $user;
+        $this->code = $code;
     }
 
     /**
@@ -28,8 +29,12 @@ class OTPEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.testmail')
+        return $this->view('email.otpemail')
             ->from('announcement@parishsanfrancisco.com', 'Parokya ng San Francisco ng Assisi')
-            ->subject('Test Email');
+            ->subject('OTP Verification')
+            ->with([
+                'user' => $this->user,
+                'code' => $this->code,
+            ]);
     }
 }

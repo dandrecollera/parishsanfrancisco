@@ -19,7 +19,9 @@ class MainUsers extends Migration
             $table->string('password');
             $table->string('accounttype')->default('user');
             $table->string('status')->default('active');
-            $table->string('otp');
+            $table->string('otp')->nullable();
+            $table->time('otp_added_at')->nullable();
+            $table->string('otp_token')->nullable();
             $table->boolean('verified')->default(false);
             $table->timestamps();
         });

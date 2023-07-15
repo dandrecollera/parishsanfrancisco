@@ -55,10 +55,10 @@
                 </div>
                 @endisset
 
-                <form method="POST" action="">
+                <form method="POST" action="/loginProcess">
                     @csrf
                     <div class="form-outline mt-4 mb-3" style="min-width:200px">
-                        <input type="text" id="email" class="form-control" name="username" required />
+                        <input type="text" id="email" class="form-control" name="email" required />
                         <label class="form-label" for="username">Email</label>
                     </div>
 

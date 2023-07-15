@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Storage;
 class EmailTest extends Controller
 {
     public function index(Request $request){
-        Mail::to('dandrecollera@gmail.com')->send(new OTPEmail());
+        $user = "Dandre Collera";
+        $code = "TESTONLY";
+        Mail::to('dandrecollera@gmail.com')->send(new OTPEmail($user, $code));
     }
 }

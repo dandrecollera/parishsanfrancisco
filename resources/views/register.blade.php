@@ -54,21 +54,33 @@
                 </div>
                 @endisset
 
-                <form method="POST" action="">
+                <form method="POST" action="/registration">
                     @csrf
-                    <div class="form-outline mt-2 mb-2">
+                    <div class="form-outline mb-3">
                         <input type="email" class="form-control" name="email" id="email" required>
                         <label for="email" class="form-label">Email*</label>
                     </div>
 
-                    <div class="form-outline my-3" style="min-width:200px">
+                    <div class="form-outline mb-3">
+                        <input type="text" class="form-control" name="username" id="username" required>
+                        <label for="username" class="form-label">Username*</label>
+                    </div>
+
+                    <div class="form-outline mb-3" style="min-width:200px">
                         <a id="show1" href="#" style="color: inherit;"><i class="fas fa-eye-slash trailing pe-auto"
                                 id="eye1"></i></a>
                         <input type="password" id="password" class="form-control" name="password" required />
-                        <label class="form-label" for="password">Password</label>
+                        <label class="form-label" for="password">Password*</label>
                     </div>
 
-                    <div class="input-group my-3">
+                    <div class="form-outline mb-3" style="min-width:200px">
+                        <a id="show2" href="#" style="color: inherit;"><i class="fas fa-eye-slash trailing pe-auto"
+                                id="eye2"></i></a>
+                        <input type="password" id="password2" class="form-control" name="password2" required />
+                        <label class="form-label" for="password2">Confirm Password*</label>
+                    </div>
+
+                    <div class="input-group mb-3">
                         <div class="form-outline">
                             <input type="text" class="form-control" name="firstname" id="firstname" required>
                             <label class="form-label" for="firstname">First Name*</label>
@@ -84,7 +96,7 @@
                         </div>
                     </div>
 
-                    <div class="form-outline my-3">
+                    <div class="form-outline mb-3">
                         <input type="date" id="birthdate" name="birthdate" class="form-control" required>
                         <label for="birthdate" class="form-label">Birthdate*</label>
                     </div>
@@ -114,8 +126,16 @@
                         </select>
                     </div>
 
+                    <div class="form-outline mb-3">
+                        <input maxlength="11" min="0" data-mdb-showcounter="true" type="number"
+                            pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==11) return false;"
+                            class="form-control" name="mobilenumber"
+                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 187" id="contactInput" required>
+                        <label class=" form-label" for="contactInput">Mobile Number*</label>
+                        <div class="form-helper"></div>
+                    </div>
 
-                    <button type="submit" class="btn btn-primary w-100 mt-4">Register</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Register</button>
                 </form>
 
                 <div class="mt-3" style="font-size: 12px">
@@ -127,10 +147,8 @@
         </div>
     </div>
 
-
     <script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
     <script src="{{asset('js/mdb.min.js')}}"></script>
-
 
     <script type="text/javascript">
         $(document).ready(function(){
@@ -159,11 +177,14 @@
             $('#province').change(function() {
                 $('#munhide').removeAttr('hidden');
                 var value1 = $('#province').val();
-                $.get('/getMunicipality/' + encodeURIComponent(value1), function(data){
-                    var options = '';
-                    $.each(data, function(key, value){
-                        options += '<option value="' + key + '">' + value  +'</option>';
+                $.get('/getMunicipality/' + encodeURIComponent(value1), function(data) {
+                    var options = '<option selected hidden value="">Municipality*</option>';
+                    var sortedData = Object.entries(data).sort((a, b) => a[1].localeCompare(b[1]));
+
+                    $.each(sortedData, function(key, value) {
+                        options += '<option value="' + value[0] + '">' + value[1] + '</option>';
                     });
+
                     $('#municipality').html(options);
                 });
             });

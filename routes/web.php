@@ -18,8 +18,28 @@ use App\Http\Controllers\EmailTest;
 
 Route::get('/test', [EmailTest::class, 'index'])->name('TestEmail');
 
-// Login and Register
-Route::get('/', [LoginController::class, 'index'])->name('LoginScreen');
+
+
+Route::get('/', function(){
+    return redirect('/login');
+});
+
+Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen');
+Route::get('/logout', [LoginController::class, 'logout'])->name('LogoutProcess');
+Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('LoginProcess');
+
+
+// Registration
 Route::get('/register', [LoginController::class, 'register'])->name('RegisterScreen');
 Route::get('/getMunicipality/{province}', [LoginController::class, 'getMunicipality'])->name('GetMunicipality');
+Route::post('/registration', [LoginController::class, 'registerProcess'])->name('RegistrationProcess');
 
+// Verification
+Route::get('/verification', [LoginController::class, 'verification'])->name('OTPVerificationPage');
+Route::post('/checkOTP', [LoginController::class, 'checkOTP'])->name('RegistrationProcess');
+Route::get('/requestOTP', [LoginController::class, 'requestOTP'])->name('RequestOTP');
+
+
+Route::group(['middleware' => 'axuauth'], function(){
+
+});
