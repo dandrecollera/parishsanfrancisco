@@ -21,7 +21,7 @@ Route::get('/test', [EmailTest::class, 'index'])->name('TestEmail');
 
 
 Route::get('/', function(){
-    return redirect('/login');
+    return redirect('https://public.parishsanfrancisco.com/');
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen');
