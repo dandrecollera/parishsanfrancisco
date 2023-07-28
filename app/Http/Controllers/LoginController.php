@@ -21,9 +21,14 @@ class LoginController extends Controller
             3 => ['A new expenses has been saved.', 'primary'],
             4 => ['Successfully Verified', 'primary'],
             5 => ['Error: Access Denied.', 'danger'],
+            6 => ['Session Expired', 'danger'],
         );
         if(!empty($request->input('err'))) {
             $data['err'] = $request->input('err');
+        }
+
+        if(session()->has('sessionkey')){
+            return redirect('/logineddd');
         }
 
         return view('login', $data);
@@ -56,6 +61,7 @@ class LoginController extends Controller
             $userdata->id,
             $userdata->accounttype,
             $userdata->email,
+            $userdata->username,
             $userdata->firstname,
             $userdata->middlename,
             $userdata->lastname,

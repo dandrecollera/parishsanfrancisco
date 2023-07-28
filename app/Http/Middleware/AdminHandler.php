@@ -27,7 +27,7 @@ class AdminHandler
         $userinfo = explode(',', $decryptedvalue);
 
         if ($userinfo[1] != 'admin') {
-            return redirect()->route('loginScreen', ['err' => 5]);
+            return redirect()->route('LoginScreen', ['err' => 5]);
             die();
         }
 

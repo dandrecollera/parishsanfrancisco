@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class LoginHandler
+class RedirectSession
 {
     /**
      * Handle an incoming request.
@@ -16,17 +16,19 @@ class LoginHandler
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->missing('sessionkey')){
-            return redirect()->route('LoginScreen', ['err' => 6]);
-            die();
+        if(session()->has('sessionkey')){
+            $value = $request->session()->get('sessionkey');
+            $decryptedvalue = decrypt($value);
+
+            $userinfo = explode(',', $decryptedvalue);
+
+            if($userinfo[1] === 'admin'){
+                return redirect('/admin');
+            } else {
+                return redirect('/home');
+            }
         }
 
-        $value = $request->session()->get('sessionkey');
-        $decryptedvalue = decrypt($value);
-
-        $userinfo = explode(',', $decryptedvalue);
-
-        $request->attributes->add(['userinfo' => $userinfo]);
         return $next($request);
     }
 }

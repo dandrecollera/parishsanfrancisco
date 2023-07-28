@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class LoginHandler
+class CacheControl
 {
     /**
      * Handle an incoming request.
@@ -16,17 +16,11 @@ class LoginHandler
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->missing('sessionkey')){
-            return redirect()->route('LoginScreen', ['err' => 6]);
-            die();
-        }
+        $response = $next($request);
+        $response->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        $response->header('Pragma', 'no-cache');
+        $response->header('Expires', '0');
+        return $response;
 
-        $value = $request->session()->get('sessionkey');
-        $decryptedvalue = decrypt($value);
-
-        $userinfo = explode(',', $decryptedvalue);
-
-        $request->attributes->add(['userinfo' => $userinfo]);
-        return $next($request);
     }
 }

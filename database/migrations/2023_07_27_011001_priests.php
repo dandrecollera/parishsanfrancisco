@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MainUsersDetails extends Migration
+class Priests extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,20 @@ class MainUsersDetails extends Migration
      */
     public function up()
     {
-        Schema::create('main_users_details', function (Blueprint $table) {
+        Schema::create('priests', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('userid');
-            $table->string('username');
+            $table->string('email');
             $table->string('firstname');
             $table->string('middlename')->nullable();
             $table->string('lastname');
             $table->date('birthdate');
-            $table->string('gender');
-            $table->unsignedBigInteger('province');
-            $table->unsignedBigInteger('municipality');
             $table->string('mobilenumber');
+            $table->longText('address')->nullable();
+            $table->string('position');
+            $table->string('conventual');
+            $table->string('status')->default('active');
             $table->timestamps();
 
-            $table->foreign('userid')->references('id')->on('main_users')->onDelete('cascade');
-            $table->foreign('province')->references('id')->on('province');
-            $table->foreign('municipality')->references('id')->on('municipality');
         });
     }
 
@@ -40,6 +37,6 @@ class MainUsersDetails extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('main_users_details');
+        Schema::dropIfExists('priests');
     }
 }
