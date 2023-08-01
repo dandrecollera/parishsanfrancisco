@@ -18,21 +18,32 @@ $path = request()->path();
         }}"></i><span>Priests</span>
 </a>
 
-<a href="/adminvolunteers"
-    class="list-group-item list-group-item-spec py-2 ripple {{$path == 'adminvolunteers' ? 'active' : ''}}">
-    <i class="fas fa-people-carry-box fa-fw me-3" style="{{$path == 'adminvolunteers' ? 'color:#2D58A1;' : ''
+<a href="/adminvolunteer"
+    class="list-group-item list-group-item-spec py-2 ripple {{$path == 'adminvolunteer' ? 'active' : ''}}">
+    <i class="fas fa-people-carry-box fa-fw me-3" style="{{$path == 'adminvolunteer' ? 'color:#2D58A1;' : ''
         }}"></i><span>Volunteers</span>
 </a>
 
-<a href="/adminappointments"
-    class="list-group-item list-group-item-spec py-2 ripple {{$path == 'adminappointments' ? 'active' : ''}}">
-    <i class="fas fa-calendar fa-fw me-3" style="{{$path == 'adminappointments' ? 'color:#2D58A1;' : ''
+<a href="#"
+    class="list-group-item list-group-item-spec py-2 ripple dropdown-toggle {{$path == 'adminappointment' || $path == 'admincalendar' ? 'active' : ''}}"
+    data-mdb-toggle="collapse" data-mdb-target="#AdminToolsContent" role="button">
+    <i class="fas fa-calendar fa-fw me-3" style="{{$path == 'adminappointment' || $path == 'admincalendar' ? 'color:#2D58A1;' : ''
         }}"></i><span>Appointments</span>
 </a>
+<div class="collapse list-group-flush ps-2" id="AdminToolsContent">
+    <a href="/adminappointment"
+        class="list-group-item list-group-item-spec py-2 ripple {{$path == 'adminappointment' ? 'active' : ''}}">
+        <span>List</span>
+    </a>
+    <a href="/admincalendar"
+        class="list-group-item list-group-item-spec py-2 ripple {{$path == 'admincalendar' ? 'active' : ''}}">
+        <span>Calendar</span>
+    </a>
+</div>
 
-<a href="/adminreports"
-    class="list-group-item list-group-item-spec py-2 ripple {{$path == 'adminreports' ? 'active' : ''}}">
-    <i class="fas fa-chart-simple fa-fw me-3" style="{{$path == 'adminreports' ? 'color:#2D58A1;' : ''
+<a href="/adminreport"
+    class="list-group-item list-group-item-spec py-2 ripple {{$path == 'adminreport' ? 'active' : ''}}">
+    <i class="fas fa-chart-simple fa-fw me-3" style="{{$path == 'adminreport' ? 'color:#2D58A1;' : ''
         }}"></i><span>Reports</span>
 </a>
 

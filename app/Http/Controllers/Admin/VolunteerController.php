@@ -11,13 +11,13 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
-class PriestController extends Controller
+class VolunteerController extends Controller
 {
     public function __construct(Request $request){
         $this->middleware('axuadmin');
     }
 
-    public function adminpriest(Request $request){
+    public function adminvolunteer(Request $request){
         $query = $request->query();
         $data = array();
         $qstring = array();
@@ -28,6 +28,7 @@ class PriestController extends Controller
             1 => 'Email already exist',
             2 => 'Password must be 8 character long',
             3 => 'Password must match',
+            4 => 'Select a ministry.'
         ];
         $data['error'] = 0;
         if(!empty($_GET['e'])){
@@ -36,8 +37,8 @@ class PriestController extends Controller
 
         // Notifications
         $data['notiflist'] = [
-            1 => 'New priest successfully added.',
-            2 => 'Priest successfully modified.',
+            1 => 'New volunteer successfully added.',
+            2 => 'Volunteer successfully modified.',
             3 => 'Password modified.',
             4 => 'Status modified.',
         ];
@@ -66,15 +67,13 @@ class PriestController extends Controller
         // Sort
         $data['sort'] = 0;
         $data['orderbylist'] = [
-            ['display' => 'Default', 'field' => 'priests.id'],
-            ['display' => 'Email', 'field' => 'priests.email'],
-            ['display' => 'First Name', 'field' => 'priests.firstname'],
-            ['display' => 'Middle Name', 'field' => 'priests.middlename'],
-            ['display' => 'Last Name', 'field' => 'priests.lastname'],
-            ['display' => 'Age', 'field' => 'priests.birthdate'],
-            ['display' => 'Position', 'field' => 'priests.position'],
-            ['display' => 'Conventual', 'field' => 'priests.conventual'],
-            ['display' => 'Status', 'field' => 'priests.status'],
+            ['display' => 'Default', 'field' => 'volunteers.id'],
+            ['display' => 'First Name', 'field' => 'volunteers.firstname'],
+            ['display' => 'Middle Name', 'field' => 'volunteers.middlename'],
+            ['display' => 'Last Name', 'field' => 'volunteers.lastname'],
+            ['display' => 'Age', 'field' => 'volunteers.birthdate'],
+            ['display' => 'Ministry', 'field' => 'volunteers.ministry'],
+            ['display' => 'Status', 'field' => 'volunteers.status'],
         ];
         if(!empty($query['sort'])){
             $data['sort'] = $qstring['sort'] = $query['sort'];
@@ -87,24 +86,18 @@ class PriestController extends Controller
         $qstring['page'] = $page;
 
         // Database Logic
-        $countdata = DB::table('priests')
+        $countdata = DB::table('volunteers')
             ->count();
-        $dbdata = DB::table('priests');
+        $dbdata = DB::table('volunteers');
 
         if(!empty($keyword)){
-            $countdata = DB::table('priests')
-                ->where('email', 'like', "%$keyword%")
-                ->orwhere('position', 'like', "%$keyword%")
-                ->orwhere('conventual', 'like', "%$keyword%")
-                ->orwhere('firstname', 'like', "%$keyword%")
+            $countdata = DB::table('volunteers')
+                ->where('firstname', 'like', "%$keyword%")
                 ->orwhere('middlename', 'like', "%$keyword%")
                 ->orwhere('lastname', 'like', "%$keyword%")
                 ->count();
 
-            $dbdata->where('email', 'like', "%$keyword%");
-            $dbdata->orwhere('position', 'like', "%$keyword%");
-            $dbdata->orwhere('conventual', 'like', "%$keyword%");
-            $dbdata->orwhere('firstname', 'like', "%$keyword%");
+            $dbdata->where('firstname', 'like', "%$keyword%");
             $dbdata->orwhere('middlename', 'like', "%$keyword%");
             $dbdata->orwhere('lastname', 'like', "%$keyword%");
         }
@@ -141,101 +134,176 @@ class PriestController extends Controller
 
         $data['dbresult'] = $dbresult = $dbdata->get()->toArray();
 
-        return view('admin.adminpriest', $data);
+        return view('admin.adminvolunteer', $data);
     }
 
-    public function adminpriest_add(Request $request){
+    public function adminvolunteer_add(Request $request){
         $data = array();
         $data['userinfo'] = $userinfo = $request->get('userinfo');
 
-        return view('admin.adminpriest_add', $data);
+        return view('admin.adminvolunteer_add', $data);
     }
 
-    public function adminpriest_add_process(Request $request){
+    public function adminvolunteer_add_process(Request $request){
         $data = array();
         $data['userinfo'] = $userinfo = $request->get('userinfo');
         $input = $request->input();
 
-        DB::table('priests')
+        if(empty($input['music']) && empty($input['youth']) && empty($input['lectors']) && empty($input['communications']) && empty($input['cathechetical']) && empty($input['ushers']) && empty($input['servers']) && empty($input['lay']) && empty($input['butler'])){
+            return redirect('/adminvolunteer?e=4');
+            die();
+        }
+
+        $ministries = array();
+        if(!empty($input['music'])){
+            $ministries[] = 'Liturgical Music Ministry';
+        }
+        if(!empty($input['youth'])){
+            $ministries[] = 'Parish Youth Ministry';
+        }
+        if(!empty($input['lectors'])){
+            $ministries[] = 'Ministry of Lectors and Commentators';
+        }
+        if(!empty($input['communications'])){
+            $ministries[] = 'Social Communications Ministry';
+        }
+        if(!empty($input['cathechetical'])){
+            $ministries[] = 'Cathechetical Ministry';
+        }
+        if(!empty($input['ushers'])){
+            $ministries[] = 'Ministry of Ushers Greeters and Collectors';
+        }
+        if(!empty($input['servers'])){
+            $ministries[] = 'Ministry of Altar Servers';
+        }
+        if(!empty($input['lay'])){
+            $ministries[] = 'Ministry of Lay Minister';
+        }
+        if(!empty($input['butler'])){
+            $ministries[] = 'Ministry of Mother Butler Guild';
+        }
+
+        $compiledministry = implode($ministries, ', ');
+
+        DB::table('volunteers')
             ->insert([
-                'email' => $input['email'],
-                'firstname' => $input['firstname'],
-                'middlename' => $input['middlename'],
-                'lastname' => $input['lastname'],
-                'birthdate' => $input['birthdate'],
-                'mobilenumber' => $input['mobilenumber'],
-                'address' => !empty($input['address']) ? $input['address'] : '',
-                'position' => $input['position'],
-                'conventual' => $input['conventual'],
-                'created_at' => Carbon::now()->toDateTimeString(),
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ]);
-
-        return redirect('/adminpriest?n=1');
-    }
-
-    public function adminpriest_edit(Request $request){
-        $data = array();
-        $data['userinfo'] = $userinfo = $request->get('userinfo');
-        $query = $request->query();
-
-        $data['selected'] = $selected = DB::table('priests')
-            ->where('id', $query['id'])
-            ->first();
-
-        return view('admin.adminpriest_edit', $data);
-    }
-
-    public function adminpriest_edit_process(Request $request){
-        $data = array();
-        $data['userinfo'] = $userinfo = $request->get('userinfo');
-        $input = $request->input();
-
-        DB::table('priests')
-            ->where('id', $input['id'])
-            ->update([
-                'email' => $input['email'],
                 'firstname' => $input['firstname'],
                 'middlename' => $input['middlename'],
                 'lastname' => $input['lastname'],
                 'birthdate' => $input['birthdate'],
                 'mobilenumber' => $input['mobilenumber'],
                 'address' => $input['address'],
-                'position' => $input['position'],
-                'conventual' => $input['conventual'],
+                'mobilenumber' => $input['mobilenumber'],
+                'ministry' => $compiledministry,
+                'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
-        return redirect('/adminpriest?n=2');
+        return redirect('/adminvolunteer?n=1');
     }
 
-    public function adminpriest_lock_process(Request $request){
+    public function adminvolunteer_edit(Request $request){
         $data = array();
         $data['userinfo'] = $userinfo = $request->get('userinfo');
         $query = $request->query();
 
-        DB::table('priests')
+
+        $selected = DB::table('volunteers')
+            ->where('id', $query['id'])
+            ->first();
+
+        $selected->ministry = explode(', ', $selected->ministry);
+
+        $data['selected'] = $selected;
+
+        return view('admin.adminvolunteer_edit', $data);
+    }
+
+    public function adminvolunteer_edit_process(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $input = $request->input();
+
+        if(empty($input['music']) && empty($input['youth']) && empty($input['lectors']) && empty($input['communications']) && empty($input['cathechetical']) && empty($input['ushers']) && empty($input['servers']) && empty($input['lay']) && empty($input['butler'])){
+            return redirect('/adminvolunteer?e=4');
+            die();
+        }
+
+        $ministries = array();
+        if(!empty($input['music'])){
+            $ministries[] = 'Liturgical Music Ministry';
+        }
+        if(!empty($input['youth'])){
+            $ministries[] = 'Parish Youth Ministry';
+        }
+        if(!empty($input['lectors'])){
+            $ministries[] = 'Ministry of Lectors and Commentators';
+        }
+        if(!empty($input['communications'])){
+            $ministries[] = 'Social Communications Ministry';
+        }
+        if(!empty($input['cathechetical'])){
+            $ministries[] = 'Cathechetical Ministry';
+        }
+        if(!empty($input['ushers'])){
+            $ministries[] = 'Ministry of Ushers Greeters and Collectors';
+        }
+        if(!empty($input['servers'])){
+            $ministries[] = 'Ministry of Altar Servers';
+        }
+        if(!empty($input['lay'])){
+            $ministries[] = 'Ministry of Lay Minister';
+        }
+        if(!empty($input['butler'])){
+            $ministries[] = 'Ministry of Mother Butler Guild';
+        }
+
+        $compiledministry = implode($ministries, ', ');
+
+        DB::table('volunteers')
+            ->where('id', $input['id'])
+            ->update([
+                'firstname' => $input['firstname'],
+                'middlename' => $input['middlename'],
+                'lastname' => $input['lastname'],
+                'birthdate' => $input['birthdate'],
+                'mobilenumber' => $input['mobilenumber'],
+                'address' => $input['address'],
+                'mobilenumber' => $input['mobilenumber'],
+                'ministry' => $compiledministry,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        return redirect('/adminvolunteer?n=2');
+    }
+
+    public function adminvolunteer_lock_process(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $query = $request->query();
+
+        DB::table('volunteers')
             ->where('id', $query['id'])
             ->update([
                 'status' => 'inactive',
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
-        return redirect('/adminpriest?n=4');
+        return redirect('/adminvolunteer?n=4');
     }
 
-    public function adminpriest_unlock_process(Request $request){
+    public function adminvolunteer_unlock_process(Request $request){
         $data = array();
         $data['userinfo'] = $userinfo = $request->get('userinfo');
         $query = $request->query();
 
-        DB::table('priests')
+        DB::table('volunteers')
             ->where('id', $query['id'])
             ->update([
                 'status' => 'active',
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
-        return redirect('/adminpriest?n=4');
+        return redirect('/adminvolunteer?n=4');
     }
 }

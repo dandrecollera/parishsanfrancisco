@@ -1,0 +1,76 @@
+.calendar {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 10px;
+    margin: auto;
+}
+
+.month {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+}
+
+.days div {
+    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 2px;
+
+    justify-content: center;
+
+    align-items: center;
+    display: flex;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.days a {
+    text-decoration: none;
+    color: black;
+}
+
+.regular {
+    background-color: rgb(111, 200, 255);
+    border: 1px solid rgb(111, 200, 255);
+}
+
+.community {
+    background-color: rgb(255, 83, 83);
+    border: 1px solid rgb(255, 83, 83);
+}
+
+.special {
+    background-color: rgb(244, 255, 41);
+    border: 1px solid rgb(244, 255, 41);
+}
+
+/* Highlight today's date */
+.today {
+    background-color: #ebebeb;
+}
+
+/* Highlight selected date */
+.selectedday {
+    border: 1px solid rgb(0, 0, 0) !important;
+}
+
+.days a div:hover {
+    border: 1px solid rgb(0, 0, 0) !important;
+    color: black;
+    transition: 0.2s;
+}

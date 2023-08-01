@@ -36,7 +36,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #fbfbfb">
 
     <div class="p-3">
         @yield('content')

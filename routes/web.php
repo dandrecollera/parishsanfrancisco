@@ -5,6 +5,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmailTest;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PriestController;
+use App\Http\Controllers\Admin\VolunteerController;
+use App\Http\Controllers\Admin\CalendarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ use App\Http\Controllers\Admin\PriestController;
 
 
 Route::get('/', function(){
-    return redirect('https://public.parishsanfrancisco.com/');
+    return view('landingpage');
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen')->middleware('session.exist');
@@ -60,4 +62,21 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/adminpriest_lock_process', [PriestController::class, 'adminpriest_lock_process'])->name('AdminPriestLockProcess');
     Route::get('/adminpriest_unlock_process', [PriestController::class, 'adminpriest_unlock_process'])->name('AdminPriestUnlockProcess');
 
+    // /adminvolunteer : Parish Volunteers
+    Route::get('/adminvolunteer', [VolunteerController::class, 'adminvolunteer'])->name('AdminVolunteer');
+    Route::get('/adminvolunteer_add', [VolunteerController::class, 'adminvolunteer_add'])->name('AdminVolunteerAdd');
+    Route::post('/adminvolunteer_add_process', [VolunteerController::class, 'adminvolunteer_add_process'])->name('AdminVolunteerAddProcess');
+    Route::get('/adminvolunteer_edit', [VolunteerController::class, 'adminvolunteer_edit'])->name('AdminVolunteerEdit');
+    Route::post('/adminvolunteer_edit_process', [VolunteerController::class, 'adminvolunteer_edit_process'])->name('AdminVolunteerEditProcess');
+    Route::get('/adminvolunteer_lock_process', [VolunteerController::class, 'adminvolunteer_lock_process'])->name('AdminVolunteerLockProcess');
+    Route::get('/adminvolunteer_unlock_process', [VolunteerController::class, 'adminvolunteer_unlock_process'])->name('AdminVolunteerUnlockProcess');
+
+    // /admincalendar : Calendar Settings
+    Route::get('/admincalendar', [CalendarController::class, 'admincalendar'])->name('AdminCalendar');
+    Route::get('/admincalendar_time', [CalendarController::class, 'admincalendar_time'])->name('AdminCalendarTime');
+    Route::get('/admincalendar_time_add', [CalendarController::class, 'admincalendar_time_add'])->name('AdminCalendarAddTime');
+    Route::post('/admincalendar_time_add_process', [CalendarController::class, 'admincalendar_time_add_process'])->name('AdminCalendarAddTimePrcess');
+    Route::get('/getDataForDay', [CalendarController::class, 'getDataForDay'])->name('getDataForDay');
+    Route::get('/getScheduleForDay', [CalendarController::class, 'getScheduleForDay'])->name('getScheduleForDay');
+    Route::get('/admincalendar_time_delete_process', [CalendarController::class, 'admincalendar_time_delete_process'])->name('admincalendar_time_delete_process');
 });

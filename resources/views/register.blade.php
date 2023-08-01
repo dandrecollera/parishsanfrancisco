@@ -139,7 +139,7 @@
                 </form>
 
                 <div class="mt-3" style="font-size: 12px">
-                    <span style="color: #b1b1b1">Already have an account?</span> <a href="/">
+                    <span style="color: #b1b1b1">Already have an account?</span> <a href="/login">
                         Login here
                     </a>
                 </div>

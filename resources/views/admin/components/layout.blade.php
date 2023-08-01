@@ -9,6 +9,9 @@
 
     <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebartop.css') }}">
+
+    @yield('style')
+
     <link rel="icon" type="image/ico" href="{{ asset('favicon/favicon.ico') }}">
 
     <script src="https://kit.fontawesome.com/55faa7e024.js" crossorigin="anonymous"></script>
