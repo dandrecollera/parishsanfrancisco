@@ -44,6 +44,12 @@
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card center-login">
+            <div style="font-size: 12px">
+                <a href="/">
+                    <i class="fas fa-angle-left ps-2 pt-2" style="color: #b1b1b1"></i>
+                    <span style="color: #b1b1b1">HOME</span>
+                </a>
+            </div>
 
             <div class="card-body p-5">
                 <center>
@@ -79,6 +85,8 @@
                     <span style="color: #b1b1b1">Not Registered?</span> <a href="/register">
                         Create Account
                     </a>
+                    <br>
+
                 </div>
             </div>
         </div>

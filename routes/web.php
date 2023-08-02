@@ -24,6 +24,10 @@ Route::get('/', function(){
     return view('landingpage');
 });
 
+Route::get('/about', function(){
+    return view('about');
+});
+
 Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen')->middleware('session.exist');
 Route::get('/logout', [LoginController::class, 'logout'])->name('LogoutProcess');
 Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('LoginProcess');
