@@ -110,12 +110,13 @@
                     </div>
                 </div>
                 <div class="col-md-7 mt-3 mt-md-0">
-                    <div class="card" style="height: 718px;">
+                    <div class="card overflow-scroll" style="height: 718px;">
                         <div class="card-body">
                             <center>
                                 <h2 class="card-title" style="line-height: 15px">Announcement</h2>
                                 <p class="card-text">As of <span style="font-weight:500">August 1, 2023</span></p>
-
+                                <hr>
+                                {{-- Content Here --}}
                             </center>
                         </div>
                     </div>

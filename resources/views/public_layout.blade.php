@@ -58,7 +58,7 @@
                     </li>
                 </ul>
 
-                <div class="d-flex align-items-center mb-3">
+                <div class="d-flex align-items-center mb-3 mb-md-0">
                     <a href="register">
                         <button type="button" class="btn btn-link px-3 me-2">
                             Register

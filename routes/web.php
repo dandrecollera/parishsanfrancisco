@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\EmailTest;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PriestController;
@@ -19,29 +20,28 @@ use App\Http\Controllers\Admin\CalendarController;
 |
 */
 
-
-Route::get('/', function(){
-    return view('landingpage');
-});
-
-Route::get('/about', function(){
-    return view('about');
-});
-
-Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen')->middleware('session.exist');
 Route::get('/logout', [LoginController::class, 'logout'])->name('LogoutProcess');
-Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('LoginProcess');
-
-
-// Registration
-Route::get('/register', [LoginController::class, 'register'])->name('RegisterScreen');
 Route::get('/getMunicipality/{province}', [LoginController::class, 'getMunicipality'])->name('GetMunicipality');
-Route::post('/registration', [LoginController::class, 'registerProcess'])->name('RegistrationProcess');
 
-// Verification
-Route::get('/verification', [LoginController::class, 'verification'])->name('OTPVerificationPage');
-Route::post('/checkOTP', [LoginController::class, 'checkOTP'])->name('RegistrationProcess');
-Route::get('/requestOTP', [LoginController::class, 'requestOTP'])->name('RequestOTP');
+Route::group(['middleware' => 'session.exist'], function(){
+    Route::get('/', [PublicController::class, 'home'])->name('home');
+    Route::get('/about', [PublicController::class, 'about'])->name('about');
+    Route::get('/services', [PublicController::class, 'services'])->name('services');
+    Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
+
+    Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen')->middleware('session.exist');
+    Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('LoginProcess');
+
+
+    // Registration
+    Route::get('/register', [LoginController::class, 'register'])->name('RegisterScreen');
+    Route::post('/registration', [LoginController::class, 'registerProcess'])->name('RegistrationProcess');
+
+    // Verification
+    Route::get('/verification', [LoginController::class, 'verification'])->name('OTPVerificationPage');
+    Route::post('/checkOTP', [LoginController::class, 'checkOTP'])->name('RegistrationProcess');
+    Route::get('/requestOTP', [LoginController::class, 'requestOTP'])->name('RequestOTP');
+});
 
 
 Route::group(['middleware' => 'axuauth'], function(){

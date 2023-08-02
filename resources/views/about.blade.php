@@ -2,6 +2,9 @@
 
 @section('content')
 <main>
+    <center>
+        <h1 class="pt-5 text-dark">About our Chapel</h1>
+    </center>
     <div class="text-dark my-5">
         <div class="container py-4">
             <div class="row d-flex align-items-center">
