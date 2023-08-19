@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PriestController;
 use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'session.exist'], function(){
 
 
 Route::group(['middleware' => 'axuauth'], function(){
+    // ADMIN
     Route::get('/admin', [AdminController::class, 'home'])->name('AdminHome');
 
     // /adminuser : User Accounts
@@ -83,4 +85,12 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/getDataForDay', [CalendarController::class, 'getDataForDay'])->name('getDataForDay');
     Route::get('/getScheduleForDay', [CalendarController::class, 'getScheduleForDay'])->name('getScheduleForDay');
     Route::get('/admincalendar_time_delete_process', [CalendarController::class, 'admincalendar_time_delete_process'])->name('admincalendar_time_delete_process');
+
+
+    // USER
+    Route::get('/home', [UserController::class, 'userhome'])->name('userhome');
+    Route::get('/userabout', [UserController::class, 'userabout'])->name('userabout');
+    Route::get('/userservices', [UserController::class, 'userservices'])->name('userservices');
+    Route::get('/userfaqs', [UserController::class, 'userfaqs'])->name('userfaqs');
+    Route::get('/usercalendar', [UserController::class, 'usercalendar'])->name('usercalendar');
 });

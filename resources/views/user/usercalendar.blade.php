@@ -1,35 +1,13 @@
-@extends('admin.components.layout')
+@extends('user.components.layout')
 
-
-@section('style')
+@section('styles')
 <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
 @endsection
+
 @section('content')
-<div class="container">
+<main style="min-height: 100vh; padding-top: 20px">
     <div class="calendar">
-        @if(!empty($error))
-        <div class="row">
-            <div class="col">
-                <div role="alert" class="alert alert-danger alert-dismissible fade show">
-                    <h4 class="alert-heading">Error</h4>
-                    <p>{{ $errorlist[(int) $error] }}</p>
-                    <button class="btn-close" type="button" data-mdb-dismiss="alert"></button>
-                </div>
-            </div>
-        </div>
-        @endif
-        @if(!empty($notif))
-        <div class="row">
-            <div class="col">
-                <div role="alert" class="alert alert-primary alert-dismissible fade show">
-                    <h4 class="alert-heading">Success</h4>
-                    <p>{{ $notiflist[(int) $notif] }}</p>
-                    <button class="btn-close" type="button" data-mdb-dismiss="alert"></button>
-                </div>
-            </div>
-        </div>
-        @endif
-        <div class="month" id="currentMonth"></div>
+        <div class="month" id="currentMonth">test</div>
 
         <center>
             <div class="input-group mb-4" role="group" style="min-width: 250px; max-width: 400px;">
@@ -53,76 +31,7 @@
         </div>
         <div class="days mb-3" id="calendarDays"></div>
 
-        <div id="daytime" hidden>
-            <hr>
-            <h4 id="themonth">test</h4>
-            <div class="btn-group">
-                <button type="button" id="addbutton" class="btn btn-dark shadow-sm btn-sm" data-test="1" data-day=""
-                    data-month="" data-year="" data-mdb-toggle="modal" data-mdb-target="#addeditmodal"><i
-                        class="fa-solid fa-circle-plus"></i>Add
-                    Schedule</button>
-            </div>
-            <div class="row">
-                <div class="col overflow-scroll scrollable-contrainer-mb-2">
-                    <table class="table table-hover" id="eventTable">
-                        <thead>
-                            <th scope="col"><strong>Start Time</strong></th>
-                            <th scope="col"><strong>End Time</strong></th>
-                            <th scope="col"><strong>Service</strong></th>
-                            <th scope="col"><strong>Slots</strong></th>
-                            <th scope="col"></th>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="modal fade" id="addeditmodal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addeditmodalLabel">
-                    <div>Modal title</div>
-                </h1>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <iframe id="addeditframe" src="" width="100%" height="450px" style="border:none; height:80vh;"></iframe>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="lockmodal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="lockmodallabel">
-                    <div>Modal title</div>
-                </h1>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this schedule for this day?<br>
-                <div class="justify-content-end d-flex">
-                    <div class="btn-group">
-                        <a href="" class="btn btn-primary" id="DeleteButton">Confirm</a>
-                        <a class="btn btn-danger" data-mdb-dismiss="modal">Cancel</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
+</main>
 
 @endsection
 
@@ -310,6 +219,7 @@
         });
     }
 
+    // START: PREV and NEXT BUTTON
     function prevMonth() {
         displayedMonth--;
         if (displayedMonth < 0) {
@@ -331,6 +241,8 @@
     $('#prevMonthBtn').click(prevMonth);
     $('#nextMonthBtn').click(nextMonth);
 
+    // END: PREV AND NEXT BUTTON
+
     $('#calendarDays').on('click', 'a', function(event) {
         event.preventDefault();
         const dayElement = $(this).find('div');
@@ -341,16 +253,6 @@
     populateMonthAndYearPickers();
     createCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
-
-    $('#addbutton').on('click', function() {
-        $('#addeditmodalLabel').html('Add Schedule');
-        $('#addeditframe').attr('src', `/admincalendar_time_add?day=${selectedDay}&month=${selectedMonth}&year=${selectedYear}`);
-    });
-    $(document).on('click', '.azu-delete', function() {
-        var sid = $(this).data("id");
-        $('#lockmodallabel').html('Delete Schedule');
-        $('#DeleteButton').prop('href', '/admincalendar_time_delete_process?id='+sid);
-    });
 
 });
 </script>
