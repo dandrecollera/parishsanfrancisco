@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PriestController;
 use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\PricesController;
 use App\Http\Controllers\User\UserController;
 
 /*
@@ -40,7 +41,7 @@ Route::group(['middleware' => 'session.exist'], function(){
 
     // Verification
     Route::get('/verification', [LoginController::class, 'verification'])->name('OTPVerificationPage');
-    Route::post('/checkOTP', [LoginController::class, 'checkOTP'])->name('RegistrationProcess');
+    Route::post('/checkOTP', [LoginController::class, 'checkOTP'])->name('checkOTP');
     Route::get('/requestOTP', [LoginController::class, 'requestOTP'])->name('RequestOTP');
 });
 
@@ -86,6 +87,9 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/getScheduleForDay', [CalendarController::class, 'getScheduleForDay'])->name('getScheduleForDay');
     Route::get('/admincalendar_time_delete_process', [CalendarController::class, 'admincalendar_time_delete_process'])->name('admincalendar_time_delete_process');
 
+    // /adminprices : Service Prices
+    Route::get('/adminprices', [PricesController::class, 'adminprices'])->name('adminprices');
+    Route::get('/adminprices_update', [PricesController::class, 'adminprices_update'])->name('adminprices_update');
 
     // USER
     Route::get('/home', [UserController::class, 'userhome'])->name('userhome');
@@ -93,4 +97,20 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/userservices', [UserController::class, 'userservices'])->name('userservices');
     Route::get('/userfaqs', [UserController::class, 'userfaqs'])->name('userfaqs');
     Route::get('/usercalendar', [UserController::class, 'usercalendar'])->name('usercalendar');
+    Route::get('/userreservation', [UserController::class, 'userreservation'])->name('userreservation');
+
+    // USER: Calendar AJAX
+    Route::get('/getDataForDayUser', [UserController::class, 'getDataForDayUser'])->name('getDataForDayUser');
+    Route::get('/getScheduleForDayUser', [UserController::class, 'getScheduleForDayUser'])->name('getScheduleForDayUser');
+
+
+    // USER: Create Reservation
+    Route::post('/baptism_add_process', [UserController::class, 'baptism_add_process'])->name('baptism_add_process');
+    Route::post('/funeral_add_process', [UserController::class, 'funeral_add_process'])->name('funeral_add_process');
+    Route::post('/anoint_add_process', [UserController::class, 'anoint_add_process'])->name('anoint_add_process');
+    Route::post('/blessing_add_process', [UserController::class, 'blessing_add_process'])->name('blessing_add_process');
+    Route::post('/kumpil_add_process', [UserController::class, 'kumpil_add_process'])->name('kumpil_add_process');
+    Route::post('/communion_add_process', [UserController::class, 'communion_add_process'])->name('communion_add_process');
+    Route::post('/wedding_add_process', [UserController::class, 'wedding_add_process'])->name('wedding_add_process');
+
 });

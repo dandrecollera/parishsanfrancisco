@@ -26,10 +26,10 @@
                     <div class="d-flex align-items-center ">
                         <img src="{{asset('img/baptism.png')}}" class="d-block services" />
                         <div>
-                            <h6>Regular Baptism</h6>
+                            <h6>Baptism</h6>
                             <p>
                                 Photocopy of Live birth/ Birth certificate<br>
-                                Apply for an <a href="login">appointment</a>
+                                Apply for an <a href="usercalendar">appointment</a>
                             </p>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             <h6>Funeral Mass</h6>
                             <p>
                                 Photocopy of Death certificate<br>
-                                Apply for an <a href="login">appointment</a>
+                                Apply for an <a href="usercalendar">appointment</a>
                             </p>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div>
                             <h6>Anointing of the Sick</h6>
                             <p>
-                                Apply for an <a href="login">appointment</a>
+                                Apply for an <a href="usercalendar">appointment</a>
                             </p>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <div>
                             <h6>Blessings</h6>
                             <p>
-                                Apply for an <a href="login">appointment</a>
+                                Apply for an <a href="usercalendar">appointment</a>
                             </p>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                 CENOMAR<br>
                                 Marriage license<br>
                                 Marriage license for civilly married<br>
-                                Apply for an <a href="login">appointment</a>
+                                Apply for an <a href="usercalendar">appointment</a>
                             </p>
                         </div>
                     </div>

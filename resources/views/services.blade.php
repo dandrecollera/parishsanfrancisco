@@ -26,7 +26,7 @@
                     <div class="d-flex align-items-center ">
                         <img src="{{asset('img/baptism.png')}}" class="d-block services" />
                         <div>
-                            <h6>Regular Baptism</h6>
+                            <h6>Baptism</h6>
                             <p>
                                 Photocopy of Live birth/ Birth certificate<br>
                                 Apply for an <a href="login">appointment</a>

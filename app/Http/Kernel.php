@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'session.exist' => \App\Http\Middleware\RedirectSession::class,
         'axuauth' => \App\Http\Middleware\LoginHandler::class,
         'axuadmin' => \App\Http\Middleware\AdminHandler::class,
+        'axuuser' => \App\Http\Middleware\UserHandler::class,
 
     ];
 }

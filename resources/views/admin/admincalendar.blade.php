@@ -29,6 +29,12 @@
             </div>
         </div>
         @endif
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 style="line-height: 0">Reservation Calendar</h2>
+            <button type="button" class="btn btn-dark btn-sm float-end" data-mdb-toggle="modal"
+                data-mdb-target="#addeditmodal" id="serviceprices">Edit Service Prices</button>
+        </div>
+        <br>
         <div class="month" id="currentMonth"></div>
 
         <center>
@@ -345,6 +351,10 @@
     $('#addbutton').on('click', function() {
         $('#addeditmodalLabel').html('Add Schedule');
         $('#addeditframe').attr('src', `/admincalendar_time_add?day=${selectedDay}&month=${selectedMonth}&year=${selectedYear}`);
+    });
+    $('#serviceprices').on('click', function() {
+        $('#addeditmodalLabel').html('Edit Service Prices');
+        $('#addeditframe').attr('src', `/adminprices`);
     });
     $(document).on('click', '.azu-delete', function() {
         var sid = $(this).data("id");

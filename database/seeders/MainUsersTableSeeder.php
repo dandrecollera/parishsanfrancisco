@@ -14,12 +14,12 @@ class MainUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('main_users')->delete();
-        
+
         \DB::table('main_users')->insert(array (
-            0 => 
+            0 =>
             array (
                 'accounttype' => 'admin',
                 'created_at' => '2023-07-15 20:57:56',
@@ -33,11 +33,11 @@ class MainUsersTableSeeder extends Seeder
                 'updated_at' => '2023-07-15 20:57:56',
                 'verified' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'accounttype' => 'user',
                 'created_at' => '2023-07-26 06:39:18',
-                'email' => 'email@test.com',
+                'email' => 'dandrecollera@gmail.com',
                 'id' => 2,
                 'otp' => NULL,
                 'otp_added_at' => NULL,
@@ -47,7 +47,7 @@ class MainUsersTableSeeder extends Seeder
                 'updated_at' => '2023-07-27 07:51:25',
                 'verified' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'accounttype' => 'secretary',
                 'created_at' => '2023-07-26 06:41:42',
@@ -61,7 +61,7 @@ class MainUsersTableSeeder extends Seeder
                 'updated_at' => '2023-07-27 00:53:57',
                 'verified' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'accounttype' => 'user',
                 'created_at' => '2023-07-26 07:44:21',
@@ -75,7 +75,7 @@ class MainUsersTableSeeder extends Seeder
                 'updated_at' => '2023-07-27 07:50:31',
                 'verified' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'accounttype' => 'admin',
                 'created_at' => '2023-07-26 08:09:44',
@@ -89,7 +89,7 @@ class MainUsersTableSeeder extends Seeder
                 'updated_at' => '2023-07-27 07:50:33',
                 'verified' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'accounttype' => 'admin',
                 'created_at' => '2023-07-26 08:12:49',
@@ -103,7 +103,7 @@ class MainUsersTableSeeder extends Seeder
                 'updated_at' => '2023-07-26 08:12:49',
                 'verified' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'accounttype' => 'media',
                 'created_at' => '2023-07-27 00:22:49',
@@ -118,7 +118,7 @@ class MainUsersTableSeeder extends Seeder
                 'verified' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

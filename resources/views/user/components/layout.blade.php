@@ -76,7 +76,7 @@
                 </ul>
 
                 <div class="d-flex align-items-center mb-3 mb-md-0">
-                    <div class="dropdown py-2 mx-2 mt-2">
+                    <div class="dropdown py-2 mt-2">
                         <a class="nav-link dropdown-toggle hidden-arrow text-white text-small d-flex align-items-center"
                             data-mdb-toggle="dropdown" aria-expanded="false">
                             @include('user.components.imagename')

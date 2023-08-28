@@ -22,7 +22,7 @@
     <div class="input-group mb-3">
         <select name="service" id="service" class="form-select" required>
             <option selected hidden value="">Service*</option>
-            <option value="Regular Baptism">Regular Baptism</option>
+            <option value="Baptism">Baptism</option>
             <option value="Funeral Mass">Funeral Mass</option>
             <option value="Anointing Of The Sick">Anointing Of The Sick</option>
             <option value="Blessing">Blessing</option>
