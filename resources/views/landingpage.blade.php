@@ -116,8 +116,15 @@
                                 <h2 class="card-title" style="line-height: 15px">Announcement</h2>
                                 <p class="card-text">As of <span style="font-weight:500">August 1, 2023</span></p>
                                 <hr>
-                                {{-- Content Here --}}
                             </center>
+
+                            {{-- template --}}
+                            <div class="card">
+                                <div class="card-body">
+                                    test
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

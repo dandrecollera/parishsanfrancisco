@@ -14,6 +14,7 @@
 
     <link rel="icon" type="image/ico" href="{{ asset('favicon/favicon.ico') }}">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://kit.fontawesome.com/55faa7e024.js" crossorigin="anonymous"></script>
 
     <style>

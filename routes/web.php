@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PriestController;
 use App\Http\Controllers\Admin\VolunteerController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\PricesController;
+use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\User\UserController;
 
 /*
@@ -22,13 +24,13 @@ use App\Http\Controllers\User\UserController;
 |
 */
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('LogoutProcess');
 Route::get('/getMunicipality/{province}', [LoginController::class, 'getMunicipality'])->name('GetMunicipality');
 
 Route::group(['middleware' => 'session.exist'], function(){
     Route::get('/', [PublicController::class, 'home'])->name('home');
     Route::get('/about', [PublicController::class, 'about'])->name('about');
     Route::get('/services', [PublicController::class, 'services'])->name('services');
+    Route::post('/public_donation', [PublicController::class, 'public_donation'])->name('public_donation');
     Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
 
     Route::get('/login', [LoginController::class, 'index'])->name('LoginScreen')->middleware('session.exist');
@@ -47,6 +49,7 @@ Route::group(['middleware' => 'session.exist'], function(){
 
 
 Route::group(['middleware' => 'axuauth'], function(){
+    Route::get('/logout', [LoginController::class, 'logout'])->name('LogoutProcess');
     // ADMIN
     Route::get('/admin', [AdminController::class, 'home'])->name('AdminHome');
 
@@ -91,6 +94,17 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/adminprices', [PricesController::class, 'adminprices'])->name('adminprices');
     Route::get('/adminprices_update', [PricesController::class, 'adminprices_update'])->name('adminprices_update');
 
+    // /adminappointment : Appointment List
+    Route::get('/adminappointment', [AppointmentController::class, 'adminappointment'])->name('adminappointment');
+    Route::get('/adminadditionalinfo', [AppointmentController::class, 'adminadditionalinfo'])->name('adminadditionalinfo');
+    Route::get('/adminstatusupdate', [AppointmentController::class, 'adminstatusupdate'])->name('adminstatusupdate');
+    Route::post('/adminstatusupdate_process', [AppointmentController::class, 'adminstatusupdate_process'])->name('adminstatusupdate_process');
+
+
+    // /adminreports : Reports Graph
+    Route::get('/adminreport', [ReportsController::class, 'adminreport'])->name('adminreport');
+    Route::get('/reservationDataMonth', [ReportsController::class, 'reservationDataMonth'])->name('reservationDataMonth');
+
     // USER
     Route::get('/home', [UserController::class, 'userhome'])->name('userhome');
     Route::get('/userabout', [UserController::class, 'userabout'])->name('userabout');
@@ -98,6 +112,9 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/userfaqs', [UserController::class, 'userfaqs'])->name('userfaqs');
     Route::get('/usercalendar', [UserController::class, 'usercalendar'])->name('usercalendar');
     Route::get('/userreservation', [UserController::class, 'userreservation'])->name('userreservation');
+    Route::get('/userhistory', [UserController::class, 'userhistory'])->name('userhistory');
+    Route::get('/additionalinfo', [UserController::class, 'additionalinfo'])->name('additionalinfo');
+
 
     // USER: Calendar AJAX
     Route::get('/getDataForDayUser', [UserController::class, 'getDataForDayUser'])->name('getDataForDayUser');

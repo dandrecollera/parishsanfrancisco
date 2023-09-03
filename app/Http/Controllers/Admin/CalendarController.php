@@ -87,6 +87,14 @@ class CalendarController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Created New Schedule',
+                'content' => "User created a new reservation schedule.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/admincalendar?n=1');
     }
 
@@ -141,7 +149,15 @@ class CalendarController extends Controller
             ->where('id', $query['id'])
             ->delete();
 
-            return redirect('/admincalendar?n=2');
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Deleted Schedule',
+                'content' => "User deleted an existing reservation schedule.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+        return redirect('/admincalendar?n=2');
     }
 
 

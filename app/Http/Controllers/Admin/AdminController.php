@@ -240,6 +240,14 @@ class AdminController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Created',
+                'content' => "User created a new account.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminuser?n=1');
     }
 
@@ -313,6 +321,14 @@ class AdminController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Edited',
+                'content' => "User edited an existing account's details.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminuser?n=2');
     }
 
@@ -338,6 +354,14 @@ class AdminController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Edited',
+                'content' => "User edited an existing account's password.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminuser?n=3');
     }
 
@@ -353,6 +377,14 @@ class AdminController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Status Update',
+                'content' => "User locked an existing account.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminuser?n=4');
     }
 
@@ -368,6 +400,14 @@ class AdminController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Status Update',
+                'content' => "User unlocked an existing account.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminuser?n=4');
     }
 }

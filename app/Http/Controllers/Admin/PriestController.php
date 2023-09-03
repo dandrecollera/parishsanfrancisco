@@ -171,6 +171,14 @@ class PriestController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Priest Added',
+                'content' => "User created a new priest query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminpriest?n=1');
     }
 
@@ -206,6 +214,14 @@ class PriestController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Priest Info Edited',
+                'content' => "User edited an existing priest query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminpriest?n=2');
     }
 
@@ -221,6 +237,14 @@ class PriestController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Priest Locked',
+                'content' => "User locked an existing priest query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminpriest?n=4');
     }
 
@@ -236,6 +260,14 @@ class PriestController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Priest Unlocked',
+                'content' => "User unlocked an existing priest query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminpriest?n=4');
     }
 }

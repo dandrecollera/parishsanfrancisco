@@ -78,7 +78,8 @@
                         <div>
                             <h6>Donations/Offering</h6>
                             <p>
-                                <a href="publicdonation">Donate now</a>
+                                <a href="#" data-mdb-toggle="modal" data-mdb-target="#addeditmodal">Donate
+                                    now</a>
                             </p>
                         </div>
                     </div>
@@ -104,6 +105,38 @@
     </div>
 </main>
 
+<div class="modal fade" id="addeditmodal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addeditmodalLabel">
+                    <div>Donate</div>
+                </h1>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <img src="{{ asset('img/gcash_qr.png') }}" alt="qr" style="max-width: 75%" class="mb-2">
+                </center>
+                <form action="/public_donation" method="POST">
+                    @csrf
+                    <div class="form-outline mb-3">
+                        <input ype="number" class="form-control" name="amount" required>
+                        <label class=" form-label" for="amount">Amount*</label>
+                    </div>
+                    <label for="InputGroupFile01" class="form-label">Receipt:</label>
+                    <div class="input-group mb-3">
+                        <input type="file" name="receipt" class="form-control" id="inputGroupFile02" required>
+                    </div>
 
+                    <center>
+                        <button type="submit" class="btn btn-primary mt-3 mb-3">Continue</button>
+                    </center>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @endsection

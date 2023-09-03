@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OTPEmail extends Mailable
+class ReservationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,10 +16,11 @@ class OTPEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $code)
+    public function __construct($subject, $user, $info)
     {
+        $this->subject = $subject;
         $this->user = $user;
-        $this->code = $code;
+        $this->info = $info;
     }
 
     /**
@@ -29,12 +30,13 @@ class OTPEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.otpemail2')
+        return $this->view('email.reservation')
             ->from('announcement@parishsanfrancisco.com', 'Parokya ng San Francisco ng Assisi')
-            ->subject('OTP Verification')
+            ->subject($this->subject)
             ->with([
+                'subject' => $this->subject,
                 'user' => $this->user,
-                'code' => $this->code,
+                'info' => $this->info,
             ]);
     }
 }

@@ -199,6 +199,14 @@ class VolunteerController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Volunteer Added',
+                'content' => "User created a new volunteer query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminvolunteer?n=1');
     }
 
@@ -274,6 +282,14 @@ class VolunteerController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Volunteer Edited',
+                'content' => "User edited an existing volunteer query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminvolunteer?n=2');
     }
 
@@ -289,6 +305,14 @@ class VolunteerController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Volunteer Status Update',
+                'content' => "User locked an existing volunteer query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminvolunteer?n=4');
     }
 
@@ -304,6 +328,14 @@ class VolunteerController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Volunteer Status Update',
+                'content' => "User unlocked an existing volunteer query.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
         return redirect('/adminvolunteer?n=4');
     }
 }

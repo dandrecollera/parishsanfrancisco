@@ -77,6 +77,15 @@ class LoginController extends Controller
         $request->session()->put('sessionkey', $userid);
         session(['sessionkey' => $userid]);
 
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userdata->id,
+                'title' => 'Logged In',
+                'content' => "User logged in the system.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
         $goto = 'null';
         if($userdata->accounttype == 'admin') $goto = 'admin';
         if($userdata->accounttype == 'user') $goto = 'home';
@@ -84,6 +93,17 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request){
+        $userinfo = $request->get('userinfo');
+        // dd($userinfo);
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Logged Out',
+                'content' => "User logged out the system.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
         $request->session()->flush();
         return redirect()->route('LoginScreen', ['err' => 2]);
     }
