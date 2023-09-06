@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationMail;
+use App\Mail\CertificateMail;
+use PDF;
 
 class AppointmentController extends Controller
 {
@@ -39,7 +41,7 @@ class AppointmentController extends Controller
         // Notifications
         $data['notiflist'] = [
             1 => 'Status Updated.',
-            2 => 'User successfully modified.',
+            2 => 'Certificate Approved.',
             3 => 'Password modified.',
             4 => 'Status modified.',
         ];
@@ -573,5 +575,298 @@ class AppointmentController extends Controller
         } elseif($status == "Cancelled"){
             return "Your appointment has been canceled";
         }
+    }
+
+    public function approved_certi(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+
+        $input = $request->input();
+
+        $data['service'] = $service = DB::table('reservation')
+            ->where('id', $input['id'])
+            ->first();
+
+        // dd($service);
+        $info = null;
+
+        if($service->service == "Baptism"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('baptisminfo', 'baptisminfo.id', 'reservation.baptism_id')
+                ->where('reservation.baptism_id', $service->baptism_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'baptisminfo.fathers_name',
+                    'baptisminfo.mothers_name',
+                    'baptisminfo.childs_name',
+                    'baptisminfo.gender',
+                    'baptisminfo.date_of_birth',
+                    'baptisminfo.place_of_birth',
+                    'baptisminfo.address',
+                    'baptisminfo.no_of_godfather',
+                    'baptisminfo.no_of_godmother',
+                    'baptisminfo.requirement',
+                    'baptisminfo.payment',
+                    'baptisminfo.paymentimage',
+                ])
+            ->first();
+        }
+
+        if($service->service == "Funeral Mass"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('funeralinfo', 'funeralinfo.id', 'reservation.funeral_id')
+                ->where('reservation.funeral_id', $service->funeral_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'funeralinfo.relationship',
+                    'funeralinfo.name',
+                    'funeralinfo.age',
+                    'funeralinfo.gender',
+                    'funeralinfo.dateofbirth',
+                    'funeralinfo.dateofpassing',
+                    'funeralinfo.location',
+                    'funeralinfo.requirement',
+                    'funeralinfo.payment',
+                    'funeralinfo.paymentimage',
+                ])
+            ->first();
+        }
+
+        if($service->service == "Anointing Of The Sick"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('anointinginfo', 'anointinginfo.id', 'reservation.anointing_id')
+                ->where('reservation.anointing_id', $service->anointing_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'anointinginfo.relationship',
+                    'anointinginfo.name',
+                    'anointinginfo.age',
+                    'anointinginfo.gender',
+                    'anointinginfo.dateofbirth',
+                    'anointinginfo.address',
+                    'anointinginfo.requirement',
+                    'anointinginfo.payment',
+                    'anointinginfo.paymentimage',
+                ])
+            ->first();
+        }
+
+        if($service->service == "Kumpil"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('kumpilinfo', 'kumpilinfo.id', 'reservation.kumpil_id')
+                ->where('reservation.kumpil_id', $service->kumpil_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'kumpilinfo.principal',
+                    'kumpilinfo.secretary',
+                    'kumpilinfo.address',
+                    'kumpilinfo.total_student',
+                    'kumpilinfo.no_of_male',
+                    'kumpilinfo.no_of_female',
+                    'kumpilinfo.requirement',
+                    'kumpilinfo.payment',
+                    'kumpilinfo.paymentimage',
+                ])
+            ->first();
+        }
+
+        if($service->service == "First Communion"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('communioninfo', 'communioninfo.id', 'reservation.communion_id')
+                ->where('reservation.communion_id', $service->communion_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'communioninfo.principal',
+                    'communioninfo.secretary',
+                    'communioninfo.address',
+                    'communioninfo.total_student',
+                    'communioninfo.no_of_male',
+                    'communioninfo.no_of_female',
+                    'communioninfo.requirement',
+                    'communioninfo.payment',
+                    'communioninfo.paymentimage',
+                ])
+            ->first();
+        }
+
+        if($service->service == "Blessing"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('blessinginfo', 'blessinginfo.id', 'reservation.blessing_id')
+                ->where('reservation.blessing_id', $service->blessing_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'blessinginfo.address',
+                    'blessinginfo.requirement',
+                    'blessinginfo.payment',
+                    'blessinginfo.paymentimage',
+                ])
+                ->first();
+        }
+
+        if($service->service == "Wedding"){
+            $info = DB::table('reservation')
+                ->leftjoin('main_users', 'main_users.id', 'reservation.user_id')
+                ->leftjoin('main_users_details', 'main_users_details.userid', 'reservation.user_id')
+                ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
+                ->leftjoin('weddinginfo', 'weddinginfo.id', 'reservation.wedding_id')
+                ->where('reservation.wedding_id', $service->wedding_id)
+                ->select([
+                    'calendartime.service',
+                    'calendartime.event_type',
+                    'main_users_details.firstname',
+                    'main_users_details.middlename',
+                    'main_users_details.lastname',
+                    'calendartime.year',
+                    'calendartime.month',
+                    'calendartime.day',
+                    'calendartime.start_time',
+                    'calendartime.end_time',
+                    'main_users.email',
+                    'main_users_details.mobilenumber',
+                    'weddinginfo.bridename',
+                    'weddinginfo.bridemother',
+                    'weddinginfo.bridefather',
+                    'weddinginfo.brideage',
+                    'weddinginfo.bridebirth',
+                    'weddinginfo.bridenumber',
+                    'weddinginfo.brideemail',
+                    'weddinginfo.brideaddress',
+                    'weddinginfo.groomname',
+                    'weddinginfo.groommother',
+                    'weddinginfo.groomfather',
+                    'weddinginfo.groomage',
+                    'weddinginfo.groombirth',
+                    'weddinginfo.groomnumber',
+                    'weddinginfo.groomemail',
+                    'weddinginfo.groomaddress',
+                    'weddinginfo.requirement',
+                    'weddinginfo.payment',
+                    'weddinginfo.paymentimage',
+                ])
+                ->first();
+        }
+
+        $data['info'] = $info;
+
+        $pdf = PDF::loadView('pdf.certificate', $data);
+
+        $now = Carbon::now();
+        $formattedNow = $now->format('Ymd_His');
+        $pdfFileName = $formattedNow . '.pdf';
+
+        $storagePath = 'public/certificate';
+
+        if(!Storage::exists($storagePath)){
+            Storage::makeDirectory($storagePath);
+        }
+
+        Storage::put("$storagePath/$pdfFileName", $pdf->output());
+        $pdfUrl = Storage::url("$storagePath/$pdfFileName");
+        $fullname = $info->firstname . ' ' . $info->middlename . ' ' . $info->lastname;
+        $fulllink = env("APP_URL") . $pdfUrl;
+
+        // dd($fullname, $fulllink);
+
+        Mail::to($info->email)->send(new CertificateMail($fullname, $fulllink));
+
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Certificate Approved',
+                'content' => "Status of a user's reservation updated",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('reservation')
+            ->where('id', $input['id'])
+            ->update([
+                "status" => "Completed",
+            ]);
+        return redirect("/adminappointment?n=2");
     }
 }

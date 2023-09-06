@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\EmailTest;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PriestController;
 use App\Http\Controllers\Admin\VolunteerController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\User\UserController;
 |
 */
 
+Route::get('/generatePDF', [PDFController::class, 'generatePDF'])->name('generatePDF');
 Route::get('/getMunicipality/{province}', [LoginController::class, 'getMunicipality'])->name('GetMunicipality');
 
 Route::group(['middleware' => 'session.exist'], function(){
@@ -99,16 +101,21 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/adminadditionalinfo', [AppointmentController::class, 'adminadditionalinfo'])->name('adminadditionalinfo');
     Route::get('/adminstatusupdate', [AppointmentController::class, 'adminstatusupdate'])->name('adminstatusupdate');
     Route::post('/adminstatusupdate_process', [AppointmentController::class, 'adminstatusupdate_process'])->name('adminstatusupdate_process');
+    Route::post('/approved_certi', [AppointmentController::class, 'approved_certi'])->name('approved_certi');
 
 
     // /adminreports : Reports Graph
     Route::get('/adminreport', [ReportsController::class, 'adminreport'])->name('adminreport');
     Route::get('/reservationDataMonth', [ReportsController::class, 'reservationDataMonth'])->name('reservationDataMonth');
+    Route::get('/moneyDataMonth', [ReportsController::class, 'moneyDataMonth'])->name('moneyDataMonth');
+    Route::get('/reservationDataYear', [ReportsController::class, 'reservationDataYear'])->name('reservationDataYear');
+    Route::get('/moneyDataMonthYear', [ReportsController::class, 'moneyDataMonthYear'])->name('moneyDataMonthYear');
 
     // USER
     Route::get('/home', [UserController::class, 'userhome'])->name('userhome');
     Route::get('/userabout', [UserController::class, 'userabout'])->name('userabout');
     Route::get('/userservices', [UserController::class, 'userservices'])->name('userservices');
+    Route::post('/user_donation', [UserController::class, 'user_donation'])->name('user_donation');
     Route::get('/userfaqs', [UserController::class, 'userfaqs'])->name('userfaqs');
     Route::get('/usercalendar', [UserController::class, 'usercalendar'])->name('usercalendar');
     Route::get('/userreservation', [UserController::class, 'userreservation'])->name('userreservation');
@@ -129,5 +136,6 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::post('/kumpil_add_process', [UserController::class, 'kumpil_add_process'])->name('kumpil_add_process');
     Route::post('/communion_add_process', [UserController::class, 'communion_add_process'])->name('communion_add_process');
     Route::post('/wedding_add_process', [UserController::class, 'wedding_add_process'])->name('wedding_add_process');
+    Route::post('/user_request', [UserController::class, 'user_request'])->name('user_request');
 
 });

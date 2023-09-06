@@ -38,7 +38,59 @@ class UserController extends Controller
         $data = array();
         $data['userinfo'] = $userinfo = $request->get('userinfo');
 
+        $data['notiflist'] = [
+            1 => 'Donation sent, thank you for donating',
+        ];
+        $data['notif'] = 0;
+        if(!empty($_GET['n'])){
+            $data['notif'] = $_GET['n'];
+        }
+
         return view('user.userservices', $data);
+    }
+
+    public function user_donation(Request $request){
+        $input = $request->input();
+        // dd($request->all());
+        $userinfo = $request->get('userinfo');
+
+        DB::table('donations')
+            ->insert([
+                'userid' => $userinfo[0],
+                'amount' => $input['amount'],
+                'donationimage' => $this->donationImage($request->file('receipt')),
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('notif')
+            ->insert([
+                'accounttype' => 'admin',
+                'title' => 'New Public Donation',
+                'content' => "New donation, amount: " . $input['amount'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        return redirect('/userservices?n=1');
+
+    }
+
+    public function donationImage($input) {
+        $photo = 'blank.jpg';
+
+        $now = Carbon::now();
+        $formattedNow = $now->format('Ymd_His');
+
+        $destinationPath = 'public/donation';
+
+        $image = $input;
+        $extension = $image->getClientOriginalExtension();
+        $filename = $formattedNow . '.' . $extension;
+        $path = $image->storeAs($destinationPath, $filename); // Changed from $input->storeAs(...)
+        $photo = $filename;
+
+        return $photo;
     }
 
     public function userfaqs(Request $request){
@@ -58,6 +110,14 @@ class UserController extends Controller
     public function userhistory(Request $request){
         $data = array();
         $data['userinfo'] = $userinfo = $request->get('userinfo');
+
+        $data['notiflist'] = [
+            1 => 'Request Sent, wait for confirmation.',
+        ];
+        $data['notif'] = 0;
+        if(!empty($_GET['n'])){
+            $data['notif'] = $_GET['n'];
+        }
 
         $data['list'] = $list = DB::table('reservation')
             ->leftjoin('calendartime', 'calendartime.id', 'reservation.calendar_id')
@@ -870,6 +930,31 @@ class UserController extends Controller
         // dd($info);
         $data['info'] = $info;
         return view('user.additionalinfo', $data);
+    }
+
+    public function user_request(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+
+        $input = $request->input();
+
+        // dd($input);
+        DB::table('reservation')
+            ->where('id', $input['id'])
+            ->update([
+                "status" => "Requesting",
+            ]);
+
+        DB::table('notif')
+            ->insert([
+                'accounttype' => 'admin',
+                'title' => 'Request Certificate',
+                'content' => "New request issued, check it's requirements and validity",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        return redirect('/userhistory?n=1');
     }
 
 }

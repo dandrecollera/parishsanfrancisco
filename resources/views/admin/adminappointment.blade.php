@@ -159,13 +159,21 @@
                         <td>{{$dbr->created_at}}</td>
                         <td style="text-transform: capitalize;">{{$dbr->status}}</td>
                         <td>
-                            @if ($dbr->status == "Completed" || $dbr->status == "Cancelled")
-
-                            @else
+                            @if ($dbr->status != "Completed" && $dbr->status != "Cancelled" && $dbr->status !=
+                            "Requesting")
                             <div class="btn-group" role="group">
                                 <a href="#" class="btn btn-primary btn-sm azu-edit" data-id="{{$dbr->id}}"
                                     data-mdb-toggle="modal" data-mdb-target="#addeditmodal">
                                     <i class="fa-solid fa-pen fa-xs"></i>
+                                </a>
+                            </div>
+
+                            @endif
+                            @if ($dbr->status == "Requesting")
+                            <div class="btn-group" role="group">
+                                <a href="#" class="btn btn-success btn-sm azu-request" data-id="{{$dbr->id}}"
+                                    data-mdb-toggle="modal" data-mdb-target="#azurequest">
+                                    <i class="fa-solid fa-check fa-xs"></i>
                                 </a>
                             </div>
                             @endif
@@ -239,6 +247,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="azurequest" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="lockmodallabel">
+                    <div>Approve Certificate Request</div>
+                </h1>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Generate Certificate for this event and email it to the user?
+                <form action="/approved_certi" method="post">
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <div class="justify-content-end d-flex">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary" id="DeleteButton">Confirm</button>
+                            <button class="btn btn-danger" data-mdb-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('jsscripts')
@@ -268,6 +304,10 @@
             $('#modalmethod').html('active');
             $('#modalemail').html(email);
             $('#DeleteButton').prop('href', '/adminuser_unlock_process?id='+sid);
+        })
+        $('.azu-request').on('click', function(){
+            var sid = $(this).data("id");
+            $("#id").val(sid);
         })
     })
 </script>

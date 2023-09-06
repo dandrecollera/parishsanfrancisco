@@ -33,8 +33,8 @@
         </div>
     </div>
 
-    <input type="text" name="id" value="{{$selectedreservation}}">
-    <input type="text" name="calendarid" value="{{$dbdata->calendar_id}}">
+    <input type="hidden" name="id" value="{{$selectedreservation}}">
+    <input type="hidden" name="calendarid" value="{{$dbdata->calendar_id}}">
     <button type="submit" class="btn btn-primary mt-1 float-end">Update Status</button>
 </form>
 

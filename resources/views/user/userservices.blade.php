@@ -20,7 +20,18 @@
 @section('content')
 <main style="min-height: 100vh">
     <div class="text-dark my-5">
-        <div class="container py-4">
+        <div class="container py-2">
+            @if(!empty($notif))
+            <div class="row mb-3">
+                <div class="col">
+                    <div role="alert" class="alert alert-primary alert-dismissible fade show">
+                        <h4 class="alert-heading">Success</h4>
+                        <p>{{ $notiflist[(int) $notif] }}</p>
+                        <button class="btn-close" type="button" data-mdb-dismiss="alert"></button>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="row mb-5">
                 <div class="col-md-6">
                     <div class="d-flex align-items-center ">
@@ -78,7 +89,8 @@
                         <div>
                             <h6>Donations/Offering</h6>
                             <p>
-                                <a href="publicdonation">Donate now</a>
+                                <a href="#" data-mdb-toggle="modal" data-mdb-target="#addeditmodal">Donate
+                                    now</a>
                             </p>
                         </div>
                     </div>
@@ -104,6 +116,38 @@
     </div>
 </main>
 
+<div class="modal fade" id="addeditmodal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addeditmodalLabel">
+                    <div>Donate</div>
+                </h1>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <img src="{{ asset('img/gcash_qr.png') }}" alt="qr" style="max-width: 75%" class="mb-2">
+                </center>
+                <form action="/user_donation" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-outline mb-3">
+                        <input type="number" class="form-control" name="amount" required>
+                        <label class=" form-label" for="amount">Amount*</label>
+                    </div>
+                    <label for="InputGroupFile01" class="form-label">Receipt:</label>
+                    <div class="input-group mb-3">
+                        <input type="file" name="receipt" class="form-control" id="inputGroupFile02" required>
+                    </div>
 
+                    <center>
+                        <button type="submit" class="btn btn-primary mt-3 mb-3">Continue</button>
+                    </center>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @endsection

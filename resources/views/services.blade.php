@@ -20,7 +20,18 @@
 @section('content')
 <main style="min-height: 100vh">
     <div class="text-dark my-5">
-        <div class="container py-4">
+        <div class="container py-2">
+            @if(!empty($notif))
+            <div class="row mb-3">
+                <div class="col">
+                    <div role="alert" class="alert alert-primary alert-dismissible fade show">
+                        <h4 class="alert-heading">Success</h4>
+                        <p>{{ $notiflist[(int) $notif] }}</p>
+                        <button class="btn-close" type="button" data-mdb-dismiss="alert"></button>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="row mb-5">
                 <div class="col-md-6">
                     <div class="d-flex align-items-center ">
@@ -118,10 +129,10 @@
                 <center>
                     <img src="{{ asset('img/gcash_qr.png') }}" alt="qr" style="max-width: 75%" class="mb-2">
                 </center>
-                <form action="/public_donation" method="POST">
+                <form action="/public_donation" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-outline mb-3">
-                        <input ype="number" class="form-control" name="amount" required>
+                        <input type="number" class="form-control" name="amount" required>
                         <label class=" form-label" for="amount">Amount*</label>
                     </div>
                     <label for="InputGroupFile01" class="form-label">Receipt:</label>
