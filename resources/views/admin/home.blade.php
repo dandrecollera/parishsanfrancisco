@@ -71,7 +71,7 @@
             <table class="table table-hover overflow-scroll">
                 <thead>
                     <tr>
-                        <th scope="col"><strong>Email</strong></th>
+                        <th scope="col"><strong>Service</strong></th>
                         <th scope="col"><strong>Start Time</strong></th>
                         <th scope="col"><strong>End Time</strong></th>
                     </tr>
