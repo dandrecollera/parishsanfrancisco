@@ -8,6 +8,14 @@
         object-fit: cover;
 
     }
+
+    .card-text-sp {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        /* Limit to 2 lines */
+        overflow: hidden;
+    }
 </style>
 @endsection
 
@@ -114,8 +122,13 @@
                         <div class="card-body">
                             <center>
                                 <h2 class="card-title" style="line-height: 15px">Announcement</h2>
+
+
                                 @php
                                 use Carbon\Carbon;
+
+                                $thecount = DB::table('announcement')
+                                ->count();
 
                                 $dbr = DB::table('announcement')
                                 ->leftjoin('volunteers', 'volunteers.id', '=', 'announcement.volunteerid')
@@ -128,14 +141,22 @@
                                 ])
                                 ->orderBy('announcement.id', 'desc')
                                 ->first();
+
+                                if(!empty($dbr)){
                                 $formatteddate = Carbon::parse($dbr->created_at)->format('F j, Y');
+                                }
+
                                 @endphp
+                                @if ($thecount > 0)
                                 <p class="card-text">As of <span style="font-weight:500">{{$formatteddate}}</span></p>
+
+                                @endif
                                 <hr>
                             </center>
 
                             {{-- template --}}
                             <center>
+                                @if ($thecount > 0)
                                 <h4>{{$dbr->title}}</h4>
                                 <h6>{{$dbr->subject}}</h6>
                                 <p>{{$dbr->content}}</p>
@@ -151,10 +172,13 @@
                                 @foreach ($ministries as $min)
                                 {{$min}}
                                 @endforeach
+
+                                @endif
                             </center>
                         </div>
                         <div class="card-footer">
                             <center>
+                                @if ($thecount > 0)
                                 <a href="{{$dbr->facebook}}">
                                     <i class="fa-brands fa-facebook fa-fw fa-xl"></i>
                                 </a>
@@ -167,6 +191,7 @@
                                 <a href="{{$dbr->youtube}}">
                                     <i class="fa-brands fa-youtube fa-fw fa-xl"></i>
                                 </a>
+                                @endif
                             </center>
                         </div>
                     </div>
@@ -200,7 +225,7 @@
                                             <h5 class="card-title">{{$db->title}}</h5>
                                             <p class="card-text card-text-sp">
                                                 {{$db->content}}</p>
-                                            <a href="/newsarticle?id={{$db->id}}" class="btn btn-sm btn-primary">See
+                                            <a href="/usernewsarticle?id={{$db->id}}" class="btn btn-sm btn-primary">See
                                                 More</a>
                                         </div>
                                     </div>
@@ -225,7 +250,7 @@
                     mutual support that family provides. Provide the opportunity for everyone in the community to grow
                     in knowledge and understanding of our God, our faith, and our church.</p>
 
-                <a href="userservices" class="btn btn-light">Read More</a>
+                <a href="user services" class="btn btn-light">Read More</a>
             </center>
         </div>
     </div>

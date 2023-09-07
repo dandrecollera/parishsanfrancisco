@@ -37,7 +37,7 @@ class MainUsersTableSeeder extends Seeder
             array (
                 'accounttype' => 'user',
                 'created_at' => '2023-07-26 06:39:18',
-                'email' => 'dandrecollera@gmail.com',
+                'email' => 'user@gmail.com',
                 'id' => 2,
                 'otp' => NULL,
                 'otp_added_at' => NULL,
@@ -65,7 +65,7 @@ class MainUsersTableSeeder extends Seeder
             array (
                 'accounttype' => 'user',
                 'created_at' => '2023-07-26 07:44:21',
-                'email' => 'azurineshiko@gmail.com',
+                'email' => 'user1@gmail.com',
                 'id' => 4,
                 'otp' => NULL,
                 'otp_added_at' => NULL,

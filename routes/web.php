@@ -146,6 +146,11 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/userreservation', [UserController::class, 'userreservation'])->name('userreservation');
     Route::get('/userhistory', [UserController::class, 'userhistory'])->name('userhistory');
     Route::get('/additionalinfo', [UserController::class, 'additionalinfo'])->name('additionalinfo');
+    Route::get('/usernews', [UserController::class, 'usernews'])->name('usernews');
+    Route::get('/usernewsarticle', [UserController::class, 'usernewsarticle'])->name('usernewsarticle');
+    Route::get('/usernotifications', [UserController::class, 'usernotifications'])->name('usernotifications');
+    Route::get('/userprofile', [UserController::class, 'userprofile'])->name('userprofile');
+    Route::get('/usersettings', [UserController::class, 'usersettings'])->name('usersettings');
 
 
     // USER: Calendar AJAX
@@ -164,5 +169,7 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::post('/user_request', [UserController::class, 'user_request'])->name('user_request');
     Route::post('/subscribe_process_public_lu', [UserController::class, 'subscribe_process_public_lu'])->name('subscribe_process_public_lu');
     Route::post('/sendmessage_process_lu', [UserController::class, 'sendmessage_process_lu'])->name('sendmessage_process_lu');
+    Route::post('/usersettings_edit_process', [UserController::class, 'usersettings_edit_process'])->name('usersettings_edit_process');
+    Route::post('/usersettings_pass_process', [UserController::class, 'usersettings_pass_process'])->name('usersettings_pass_process');
 
 });
