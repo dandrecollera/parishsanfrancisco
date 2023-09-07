@@ -25,6 +25,124 @@ class AdminController extends Controller
         return view('admin.home', $data);
     }
 
+    public function adminnotification(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $query = $request->query();
+
+        $lpp = 25;
+        $lineperpage = [3, 25, 50, 100, 200];
+        if(!empty($query['lpp'])){
+            if(in_array($query['lpp'], $lineperpage)){
+                $lpp = $query['lpp'];
+            }
+        }
+        $data['lpp'] = $qstring['lpp'] = $lpp;
+
+        $page = 1;
+        if(!empty($query['page'])){
+            $page = $query['page'];
+        }
+        $qstring['page'] = $page;
+
+        $countdata = DB::table('notif')
+            ->where('accounttype', 'admin')
+            ->count();
+        $dbdata = DB::table('notif')
+            ->where('accounttype', 'admin')
+            ->orderBy('id', 'desc');
+
+
+        $data['totalpages'] = ceil($countdata/$lpp);
+        $data['page'] = $page;
+        $data['totalitems'] = $countdata;
+        $dataoffset = ($page*$lpp) - $lpp;
+
+        $dbdata->offset($dataoffset)->limit($lpp);
+        $data['qstring'] = http_build_query($qstring);
+        $data['qstring2'] = $qstring;
+
+        if ($page < 2) {
+            $data['page_first_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angles-left fa-xs"></i> </a>';
+            $data['page_prev_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angle-left fa-xs"></i> </a>';
+        } else {
+            $urlvar = $qstring; $urlvar['page'] = 1;
+            $data['page_first_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angles-left fa-xs"></i> </a>';
+            $urlvar = $qstring; $urlvar['page'] = $urlvar['page'] - 1;
+            $data['page_prev_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angle-left fa-xs"></i> </a>';
+        }
+        if ($page >= $data['totalpages']) {
+            $data['page_last_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angles-right fa-xs"></i> </a>';
+            $data['page_next_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angle-right fa-xs"></i> </a>';
+        } else {
+            $urlvar = $qstring; $urlvar['page'] = $data['totalpages'];
+            $data['page_last_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angles-right fa-xs"></i> </a>';
+            $urlvar = $qstring; $urlvar['page'] = $urlvar['page'] + 1;
+            $data['page_next_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angle-right fa-xs"></i> </a>';
+        }
+
+        $data['dbresult'] = $dbresult = $dbdata->get()->toArray();
+        return view('admin.adminnotification', $data);
+    }
+
+    public function adminlogs(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $query = $request->query();
+
+        $lpp = 25;
+        $lineperpage = [3, 25, 50, 100, 200];
+        if(!empty($query['lpp'])){
+            if(in_array($query['lpp'], $lineperpage)){
+                $lpp = $query['lpp'];
+            }
+        }
+        $data['lpp'] = $qstring['lpp'] = $lpp;
+
+        $page = 1;
+        if(!empty($query['page'])){
+            $page = $query['page'];
+        }
+        $qstring['page'] = $page;
+
+        $countdata = DB::table('systemlog')
+            ->count();
+        $dbdata = DB::table('systemlog')
+            ->orderBy('id', 'desc');
+
+
+        $data['totalpages'] = ceil($countdata/$lpp);
+        $data['page'] = $page;
+        $data['totalitems'] = $countdata;
+        $dataoffset = ($page*$lpp) - $lpp;
+
+        $dbdata->offset($dataoffset)->limit($lpp);
+        $data['qstring'] = http_build_query($qstring);
+        $data['qstring2'] = $qstring;
+
+        if ($page < 2) {
+            $data['page_first_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angles-left fa-xs"></i> </a>';
+            $data['page_prev_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angle-left fa-xs"></i> </a>';
+        } else {
+            $urlvar = $qstring; $urlvar['page'] = 1;
+            $data['page_first_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angles-left fa-xs"></i> </a>';
+            $urlvar = $qstring; $urlvar['page'] = $urlvar['page'] - 1;
+            $data['page_prev_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angle-left fa-xs"></i> </a>';
+        }
+        if ($page >= $data['totalpages']) {
+            $data['page_last_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angles-right fa-xs"></i> </a>';
+            $data['page_next_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angle-right fa-xs"></i> </a>';
+        } else {
+            $urlvar = $qstring; $urlvar['page'] = $data['totalpages'];
+            $data['page_last_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angles-right fa-xs"></i> </a>';
+            $urlvar = $qstring; $urlvar['page'] = $urlvar['page'] + 1;
+            $data['page_next_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angle-right fa-xs"></i> </a>';
+        }
+
+        $data['dbresult'] = $dbresult = $dbdata->get()->toArray();
+        return view('admin.adminlogs', $data);
+    }
+
     public function adminuser(Request $request){
         $query = $request->query();
         $data = array();
@@ -172,7 +290,6 @@ class AdminController extends Controller
         }
 
         $data['dbresult'] = $dbresult = $dbdata->get()->toArray();
-
 
         return view('admin.adminuser', $data);
     }
@@ -409,5 +526,235 @@ class AdminController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
         return redirect('/adminuser?n=4');
+    }
+
+    public function adminmessage(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $query = $request->query();
+
+        $lpp = 25;
+        $lineperpage = [3, 25, 50, 100, 200];
+        if(!empty($query['lpp'])){
+            if(in_array($query['lpp'], $lineperpage)){
+                $lpp = $query['lpp'];
+            }
+        }
+        $data['lpp'] = $qstring['lpp'] = $lpp;
+
+        $page = 1;
+        if(!empty($query['page'])){
+            $page = $query['page'];
+        }
+        $qstring['page'] = $page;
+
+        $countdata = DB::table('messages')
+            ->count();
+        $dbdata = DB::table('messages')
+            ->orderBy('id', 'desc');
+
+
+        $data['totalpages'] = ceil($countdata/$lpp);
+        $data['page'] = $page;
+        $data['totalitems'] = $countdata;
+        $dataoffset = ($page*$lpp) - $lpp;
+
+        $dbdata->offset($dataoffset)->limit($lpp);
+        $data['qstring'] = http_build_query($qstring);
+        $data['qstring2'] = $qstring;
+
+        if ($page < 2) {
+            $data['page_first_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angles-left fa-xs"></i> </a>';
+            $data['page_prev_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angle-left fa-xs"></i> </a>';
+        } else {
+            $urlvar = $qstring; $urlvar['page'] = 1;
+            $data['page_first_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angles-left fa-xs"></i> </a>';
+            $urlvar = $qstring; $urlvar['page'] = $urlvar['page'] - 1;
+            $data['page_prev_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angle-left fa-xs"></i> </a>';
+        }
+        if ($page >= $data['totalpages']) {
+            $data['page_last_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angles-right fa-xs"></i> </a>';
+            $data['page_next_url'] = '<a class="btn btn-dark disabled" href="#" role="button" aria-disabled="true" style="padding-top: 10px;"><i class="fa-solid fa-angle-right fa-xs"></i> </a>';
+        } else {
+            $urlvar = $qstring; $urlvar['page'] = $data['totalpages'];
+            $data['page_last_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angles-right fa-xs"></i> </a>';
+            $urlvar = $qstring; $urlvar['page'] = $urlvar['page'] + 1;
+            $data['page_next_url'] = '<a class="btn btn-dark" href="?'.http_build_query($urlvar).'" role="button" style="padding-top: 10px;"><i class="fa-solid fa-angle-right fa-xs"></i> </a>';
+        }
+
+        $data['dbresult'] = $dbresult = $dbdata->get()->toArray();
+
+        return view('admin.adminmessage', $data);
+    }
+
+    public function adminsettings(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $query = $request->query();
+
+        // Errors
+        $data['errorlist'] = [
+            1 => 'Email already exist',
+            2 => 'Password must be 8 character long',
+            3 => 'Password must match',
+        ];
+        $data['error'] = 0;
+        if(!empty($_GET['e'])){
+            $data['error'] = $_GET['e'];
+        }
+
+        // Notifications
+        $data['notiflist'] = [
+            1 => 'New user successfully added.',
+            2 => 'Successfully modified.',
+            3 => 'Password modified.',
+            4 => 'Status modified.',
+        ];
+        $data['notif'] = 0;
+        if(!empty($_GET['n'])){
+            $data['notif'] = $_GET['n'];
+        }
+
+        $data['province'] = $provincedb = DB::table('province')
+            ->orderBy('province_name', 'asc')
+            ->get()
+            ->toArray();
+
+        $data['selecteduser'] = $selecteduser = DB::table('main_users')
+            ->leftjoin('main_users_details', 'main_users_details.userid', '=', 'main_users.id')
+            ->where('main_users.id', $userinfo[0])
+            ->first();
+
+        $selectedprovince = DB::table('province')
+            ->where('id', $selecteduser->province)
+            ->first();
+
+        $data['municipality'] = $selectedmunicipality = DB::table('municipality')
+            ->where('province_id', $selectedprovince->id)
+            ->orderBy('municipality_name', 'asc')
+            ->get()
+            ->toArray();
+
+        return view('admin.components.adminsettings', $data);
+    }
+
+    public function adminsettings_edit_process(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $input = $request->input();
+
+        $lastemail = DB::table('main_users')
+            ->where('id', $input['id'])
+            ->select('email')
+            ->first();
+
+        if($lastemail->email != $input['email']){
+            $checkemail = DB::table('main_users')
+                ->where('email', $input['email'])
+                ->count();
+            if($checkemail == true){
+                return redirect('/adminsettings?e=1');
+                die();
+            }
+        }
+
+        DB::table('main_users')
+            ->where('id', $input['id'])
+            ->update([
+                'email' => $input['email'],
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('main_users_details')
+            ->where('userid', $input['id'])
+            ->update([
+                'username' => $input['username'],
+                'firstname' => $input['firstname'],
+                'middlename' => !empty($input['middlename']) ? $input['middlename'] : '',
+                'lastname' => $input['lastname'],
+                'birthdate' => $input['birthdate'],
+                'gender' => $input['gender'],
+                'province' => $input['province'],
+                'municipality' => $input['municipality'],
+                'mobilenumber' => $input['mobilenumber'],
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Edited',
+                'content' => "User modified his/her profile.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        $userdata = DB::table('main_users')
+            ->leftjoin('main_users_details', 'main_users_details.userid', '=', 'main_users.id')
+            ->where('main_users.id', $userinfo[0])
+            ->first();
+
+        $userkey = [
+            $userdata->id, //0
+            $userdata->accounttype, //1
+            $userdata->email, //2
+            $userdata->username, //3
+            $userdata->firstname, //4
+            $userdata->middlename, //5
+            $userdata->lastname, //6
+            $userdata->birthdate, //7
+            $userdata->gender, //8
+            $userdata->province, //9
+            $userdata->municipality, //10
+            $userdata->mobilenumber, //11
+            date('ymdHis')
+        ];
+
+        $userid = encrypt(implode($userkey, ','));
+        $request->session()->put('sessionkey', $userid);
+        session(['sessionkey' => $userid]);
+
+        return redirect('/adminsettings?n=2');
+    }
+
+    public function adminsettings_pass_process(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+        $input = $request->input();
+
+        if(strlen($input['password']) < 8){
+            return redirect('/adminsettings?e=2');
+            die();
+        }
+
+        if($input['password2'] != $input['password']){
+            return redirect('/adminsettings?e=3');
+            die();
+        }
+
+        DB::table('main_users')
+            ->where('id', $input['id'])
+            ->update([
+                'password' => md5($input['password']),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('systemlog')
+            ->insert([
+                'userid' => $userinfo[0],
+                'title' => 'Account Edited',
+                'content' => "User modified his/her profile.",
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        return redirect('/adminsettings?n=3');
+    }
+
+    public function adminprofile(Request $request){
+        $data = array();
+        $data['userinfo'] = $userinfo = $request->get('userinfo');
+
+        return view('admin.components.adminprofile', $data);
     }
 }

@@ -957,4 +957,59 @@ class UserController extends Controller
         return redirect('/userhistory?n=1');
     }
 
+    public function sendmessage_process_lu(Request $request){
+        $input = $request->input();
+
+        // dd($input);
+
+        DB::table('messages')
+            ->insert([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'message' => $input['address'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('notif')
+            ->insert([
+                'accounttype' => 'admin',
+                'title' => 'A user sent a message!',
+                'content' => "Check message tab to see more, sender: " . $input['email'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        return redirect('/home');
+    }
+
+    public function subscribe_process_public_lu(Request $request){
+        $input = $request->input();
+
+        $count = DB::table('subscription')
+            ->where('email', $input['email'])
+            ->count();
+
+        if($count < 1){
+            DB::table('subscription')
+                ->insert([
+                    "email" => $input['email'],
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+
+            Mail::to($input['email'])->send(new SubscriptionMail());
+
+            DB::table('notif')
+                ->insert([
+                    'accounttype' => 'admin',
+                    'title' => 'A New User Subscribe to our news letter!',
+                    'content' => "New Subscriber: " . $input['email'],
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+        }
+
+        return redirect('/home');
+    }
 }

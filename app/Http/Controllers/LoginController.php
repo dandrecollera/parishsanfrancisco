@@ -58,18 +58,18 @@ class LoginController extends Controller
         }
 
         $userkey = [
-            $userdata->id,
-            $userdata->accounttype,
-            $userdata->email,
-            $userdata->username,
-            $userdata->firstname,
-            $userdata->middlename,
-            $userdata->lastname,
-            $userdata->birthdate,
-            $userdata->gender,
-            $userdata->province,
-            $userdata->municipality,
-            $userdata->mobilenumber,
+            $userdata->id, //0
+            $userdata->accounttype, //1
+            $userdata->email, //2
+            $userdata->username, //3
+            $userdata->firstname, //4
+            $userdata->middlename, //5
+            $userdata->lastname, //6
+            $userdata->birthdate, //7
+            $userdata->gender, //8
+            $userdata->province, //9
+            $userdata->municipality, //10
+            $userdata->mobilenumber, //11
             date('ymdHis')
         ];
 
@@ -80,7 +80,7 @@ class LoginController extends Controller
         DB::table('systemlog')
             ->insert([
                 'userid' => $userdata->id,
-                'title' => 'Logged In',
+                'title' =>  $userdata->firstname . ' Logged In',
                 'content' => "User logged in the system.",
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
@@ -88,6 +88,8 @@ class LoginController extends Controller
 
         $goto = 'null';
         if($userdata->accounttype == 'admin') $goto = 'admin';
+        if($userdata->accounttype == 'secretary') $goto = 'admin';
+        if($userdata->accounttype == 'media') $goto = 'adminarticle';
         if($userdata->accounttype == 'user') $goto = 'home';
         return redirect()->to($goto);
     }
@@ -98,7 +100,7 @@ class LoginController extends Controller
         DB::table('systemlog')
             ->insert([
                 'userid' => $userinfo[0],
-                'title' => 'Logged Out',
+                'title' => $userinfo[4] . ' Logged Out',
                 'content' => "User logged out the system.",
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),

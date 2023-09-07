@@ -114,9 +114,59 @@
                         <div class="card-body">
                             <center>
                                 <h2 class="card-title" style="line-height: 15px">Announcement</h2>
-                                <p class="card-text">As of <span style="font-weight:500">August 1, 2023</span></p>
+                                @php
+                                use Carbon\Carbon;
+
+                                $dbr = DB::table('announcement')
+                                ->leftjoin('volunteers', 'volunteers.id', '=', 'announcement.volunteerid')
+                                ->select([
+                                'announcement.*',
+                                'volunteers.firstname',
+                                'volunteers.middlename',
+                                'volunteers.lastname',
+                                'volunteers.ministry',
+                                ])
+                                ->orderBy('announcement.id', 'desc')
+                                ->first();
+                                $formatteddate = Carbon::parse($dbr->created_at)->format('F j, Y');
+                                @endphp
+                                <p class="card-text">As of <span style="font-weight:500">{{$formatteddate}}</span></p>
                                 <hr>
-                                {{-- Content Here --}}
+                            </center>
+
+                            {{-- template --}}
+                            <center>
+                                <h4>{{$dbr->title}}</h4>
+                                <h6>{{$dbr->subject}}</h6>
+                                <p>{{$dbr->content}}</p>
+                                <hr>
+                                <h4>Volunteer</h4>
+                                @php
+                                $ministries = explode(', ', $dbr->ministry);
+                                @endphp
+                                <h5>
+                                    {{$dbr->firstname}} {{$dbr->middlename}} {{$dbr->lastname}}
+
+                                </h5>
+                                @foreach ($ministries as $min)
+                                {{$min}}
+                                @endforeach
+                            </center>
+                        </div>
+                        <div class="card-footer">
+                            <center>
+                                <a href="{{$dbr->facebook}}">
+                                    <i class="fa-brands fa-facebook fa-fw fa-xl"></i>
+                                </a>
+                                <a href="{{$dbr->instagram}}">
+                                    <i class="fa-brands fa-instagram fa-fw fa-xl"></i>
+                                </a>
+                                <a href="{{$dbr->twitter}}">
+                                    <i class="fa-brands fa-twitter fa-fw fa-xl"></i>
+                                </a>
+                                <a href="{{$dbr->youtube}}">
+                                    <i class="fa-brands fa-youtube fa-fw fa-xl"></i>
+                                </a>
                             </center>
                         </div>
                     </div>
@@ -127,6 +177,37 @@
                             <center>
                                 <h2 class="card-title" style="line-height: 15px">Articles</h2>
                             </center>
+                            @php
+                            $count = DB::table('articles')
+                            ->count();
+
+                            $dbr = DB::table('articles')
+                            ->orderBy('id', 'desc')
+                            ->take(3)
+                            ->get()
+                            ->toArray();
+                            @endphp
+
+                            @if ($count > 0)
+
+                            <div class="row pt-4">
+                                @foreach ($dbr as $db)
+                                <div class="col-lg-4 mb-4">
+                                    <div class="card ">
+                                        <img src="{{asset('storage/articles/' .$db->image  )}}" class="card-img-top"
+                                            style="max-height: 200px; object-fit:cover" />
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{$db->title}}</h5>
+                                            <p class="card-text card-text-sp">
+                                                {{$db->content}}</p>
+                                            <a href="/newsarticle?id={{$db->id}}" class="btn btn-sm btn-primary">See
+                                                More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -144,7 +225,7 @@
                     mutual support that family provides. Provide the opportunity for everyone in the community to grow
                     in knowledge and understanding of our God, our faith, and our church.</p>
 
-                <button type="button" class="btn btn-light">Read More</button>
+                <a href="userservices" class="btn btn-light">Read More</a>
             </center>
         </div>
     </div>
@@ -168,7 +249,7 @@
                             Estates
                             Subdivision sa Barangay Tatala.
                         </p>
-                        <button type="button" class="btn btn-dark">Read More</button>
+                        <a href="userabout" class="btn btn-dark">Read More</a>
                     </center>
                     <div class="d-none d-md-block">
                         <h1>About our Chapel</h1>
@@ -180,7 +261,7 @@
                             Estates
                             Subdivision sa Barangay Tatala.
                         </p>
-                        <button type="button" class="btn btn-dark">Read More</button>
+                        <a href="userabout" class="btn btn-dark">Read More</a>
                     </div>
                 </div>
             </div>
@@ -191,10 +272,11 @@
         <div class="container py-5">
             <center>
                 <h2>Subscribe now for real-time updates and be ahead of the curve!</h2>
-                <form action="/subscribe_process">
+                <form action="/subscribe_process_public_lu" method="POST">
                     @csrf
                     <div class="input-group form-outline form-white mt-4 mb-3">
-                        <input type="text" id="email" class="form-control" name="email" required />
+                        <input type="text" id="email" class="form-control" name="email" required
+                            value="{{$userinfo[2]}}" readonly />
                         <label class="form-label" for="username">Email</label>
                         <button class="btn btn-light shadow-0" type="submit" id="button-addon1"
                             data-mdb-ripple-color="dark">
@@ -209,14 +291,15 @@
         <div class="container py-5">
             <h2>Send us a Message!</h2>
 
-            <form action="/sendmessage_process" class="mt-3">
+            <form action="/sendmessage_process_lu" method="POST" class="mt-3">
                 @csrf
                 <div class="form-outline form-white mb-3">
-                    <input type="text" class="form-control" name="name" id="name" required>
+                    <input type="text" class="form-control" name="name" id="name"
+                        value="{{$userinfo[4]}} {{$userinfo[5]}} {{$userinfo[6]}} " readonly>
                     <label class="form-label" for="name">Name*</label>
                 </div>
                 <div class="form-outline form-white mb-3">
-                    <input type="text" class="form-control" name="email" id="email" required>
+                    <input type="text" class="form-control" name="email" id="email" value="{{$userinfo[2]}}" readonly>
                     <label class="form-label" for="email">Email*</label>
                 </div>
                 <div class="form-outline form-white mb-3">

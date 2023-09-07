@@ -9,6 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionMail;
 
 class PublicController extends Controller
 {
@@ -18,6 +20,25 @@ class PublicController extends Controller
 
     public function about(Request $request){
         return view('about');
+    }
+
+    public function news(Request $request){
+        return view('news');
+    }
+
+    public function newsarticle(Request $request){
+        $data = array();
+        $query = $request->query();
+
+        if(!$query || $query['id'] == null){
+            return redirect('news');
+        }
+
+        $data['db'] = DB::table('articles')
+            ->where('id', $query['id'])
+            ->first();
+
+        return view('newsarticle', $data);
     }
 
     public function services(Request $request){
@@ -78,5 +99,61 @@ class PublicController extends Controller
         $photo = $filename;
 
         return $photo;
+    }
+
+    public function subscribe_process_public(Request $request){
+        $input = $request->input();
+
+        $count = DB::table('subscription')
+            ->where('email', $input['email'])
+            ->count();
+
+        if($count < 1){
+            DB::table('subscription')
+                ->insert([
+                    "email" => $input['email'],
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+
+            Mail::to($input['email'])->send(new SubscriptionMail());
+
+            DB::table('notif')
+                ->insert([
+                    'accounttype' => 'admin',
+                    'title' => 'A New User Subscribe to our news letter!',
+                    'content' => "New Subscriber: " . $input['email'],
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+        }
+
+        return redirect('/');
+    }
+
+    public function sendmessage_process(Request $request){
+        $input = $request->input();
+
+        // dd($input);
+
+        DB::table('messages')
+            ->insert([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'message' => $input['address'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        DB::table('notif')
+            ->insert([
+                'accounttype' => 'admin',
+                'title' => 'A user sent a message!',
+                'content' => "Check message tab to see more, sender: " . $input['email'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+        return redirect('/');
     }
 }

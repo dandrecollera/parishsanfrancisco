@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\PricesController;
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\User\UserController;
 
 /*
@@ -30,8 +32,12 @@ Route::get('/getMunicipality/{province}', [LoginController::class, 'getMunicipal
 
 Route::group(['middleware' => 'session.exist'], function(){
     Route::get('/', [PublicController::class, 'home'])->name('home');
+    Route::get('/subscribe_process_public', [PublicController::class, 'subscribe_process_public'])->name('subscribe_process_public');
+    Route::get('/sendmessage_process', [PublicController::class, 'sendmessage_process'])->name('sendmessage_process');
     Route::get('/about', [PublicController::class, 'about'])->name('about');
     Route::get('/services', [PublicController::class, 'services'])->name('services');
+    Route::get('/news', [PublicController::class, 'news'])->name('news');
+    Route::get('/newsarticle', [PublicController::class, 'newsarticle'])->name('newsarticle');
     Route::post('/public_donation', [PublicController::class, 'public_donation'])->name('public_donation');
     Route::get('/faqs', [PublicController::class, 'faqs'])->name('faqs');
 
@@ -54,6 +60,14 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/logout', [LoginController::class, 'logout'])->name('LogoutProcess');
     // ADMIN
     Route::get('/admin', [AdminController::class, 'home'])->name('AdminHome');
+    Route::get('/adminnotification', [AdminController::class, 'adminnotification'])->name('adminnotification');
+    Route::get('/adminmessage', [AdminController::class, 'adminmessage'])->name('adminmessage');
+    Route::get('/adminlogs', [AdminController::class, 'adminlogs'])->name('adminlogs');
+    Route::get('/adminsettings', [AdminController::class, 'adminsettings'])->name('adminsettings');
+    Route::get('/adminprofile', [AdminController::class, 'adminprofile'])->name('adminprofile');
+    Route::post('/adminsettings_edit_process', [AdminController::class, 'adminsettings_edit_process'])->name('adminsettings_edit_process');
+    Route::post('/adminsettings_pass_process', [AdminController::class, 'adminsettings_pass_process'])->name('adminsettings_pass_process');
+
 
     // /adminuser : User Accounts
     Route::get('/adminuser', [AdminController::class, 'adminuser'])->name('AdminUser');
@@ -111,6 +125,17 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::get('/reservationDataYear', [ReportsController::class, 'reservationDataYear'])->name('reservationDataYear');
     Route::get('/moneyDataMonthYear', [ReportsController::class, 'moneyDataMonthYear'])->name('moneyDataMonthYear');
 
+    // /adminarticle : Admin Articles
+    Route::get('/adminarticle', [ArticleController::class, 'adminarticle'])->name('adminarticle');
+    Route::get('/adminarticle_add', [ArticleController::class, 'adminarticle_add'])->name('adminarticle_add');
+    Route::post('/adminarticle_add_process', [ArticleController::class, 'adminarticle_add_process'])->name('adminarticle_add_process');
+    Route::get('/adminarticle_lock_process', [ArticleController::class, 'adminarticle_lock_process'])->name('adminarticle_lock_process');
+    Route::get('/adminarticle_unlock_process', [ArticleController::class, 'adminarticle_unlock_process'])->name('adminarticle_unlock_process');
+
+    // /adminannouncement : Announcements
+    Route::get('/adminannouncement', [AnnouncementController::class, 'adminannouncement'])->name('adminannouncement');
+    Route::post('/adminannouncement_add_process', [AnnouncementController::class, 'adminannouncement_add_process'])->name('adminannouncement_add_process');
+
     // USER
     Route::get('/home', [UserController::class, 'userhome'])->name('userhome');
     Route::get('/userabout', [UserController::class, 'userabout'])->name('userabout');
@@ -137,5 +162,7 @@ Route::group(['middleware' => 'axuauth'], function(){
     Route::post('/communion_add_process', [UserController::class, 'communion_add_process'])->name('communion_add_process');
     Route::post('/wedding_add_process', [UserController::class, 'wedding_add_process'])->name('wedding_add_process');
     Route::post('/user_request', [UserController::class, 'user_request'])->name('user_request');
+    Route::post('/subscribe_process_public_lu', [UserController::class, 'subscribe_process_public_lu'])->name('subscribe_process_public_lu');
+    Route::post('/sendmessage_process_lu', [UserController::class, 'sendmessage_process_lu'])->name('sendmessage_process_lu');
 
 });

@@ -72,7 +72,11 @@
         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
             <div class="container-fluid">
                 <a href="/admin" class="navbar-brand fw-bolder ps-2 text-white">
-                    <img src="{{asset('img/Logo.png')}}" alt="logo" height="60"> Admin
+                    <img src="{{asset('img/Logo.png')}}" alt="logo" height="60"> <span
+                        style="text-transform: capitalize;">
+                        {{$userinfo[1]}}
+                    </span>
+
                 </a>
 
                 <div class="btn-group shadow-0 d-none d-lg-block">
