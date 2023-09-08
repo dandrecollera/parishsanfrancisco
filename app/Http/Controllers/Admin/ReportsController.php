@@ -366,7 +366,7 @@ class ReportsController extends Controller
             for ($i = 2022; $i <= $query['year']; $i++) {
                 $count = DB::table('reservation')
                     ->leftjoin('calendartime', 'calendartime.id', '=', 'reservation.calendar_id')
-                    ->leftjoin('communioninfo', 'communioninfo.id', '=', 'reservation.kumpil_id')
+                    ->leftjoin('communioninfo', 'communioninfo.id', '=', 'reservation.communion_id')
                     ->where(function ($queryBuilder) use ($i, $query) {
                         $queryBuilder->where('reservation.status', 'Completed')
                             ->orWhere('reservation.status', 'Requesting')
@@ -384,7 +384,7 @@ class ReportsController extends Controller
             for ($i = 2022; $i <= $query['year']; $i++) {
                 $count = DB::table('reservation')
                     ->leftjoin('calendartime', 'calendartime.id', '=', 'reservation.calendar_id')
-                    ->leftjoin('weddinginfo', 'weddinginfo.id', '=', 'reservation.kumpil_id')
+                    ->leftjoin('weddinginfo', 'weddinginfo.id', '=', 'reservation.wedding_id')
                     ->where(function ($queryBuilder) use ($i, $query) {
                         $queryBuilder->where('reservation.status', 'Completed')
                             ->orWhere('reservation.status', 'Requesting')
