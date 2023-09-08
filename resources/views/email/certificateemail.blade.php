@@ -212,7 +212,7 @@
 
                                                             <h1 class="v-font-size"
                                                                 style="margin: 0px; line-height: 120%; text-align: left; word-wrap: break-word; font-size: 33px; font-weight: 700;">
-                                                                OTP Code Verification<span
+                                                                Certificate Approved<span
                                                                     data-metadata="&lt;!--(figmeta)eyJmaWxlS2V5IjoidkNvS3ZmUVRpVUhrZVdaaEFTeGtkWiIsInBhc3RlSUQiOjEyMzgxMDY2MDAsImRhdGFUeXBlIjoic2NlbmUifQo=(/figmeta)--&gt;"
                                                                     style="line-height: 39.6px;"></span></h1>
 
