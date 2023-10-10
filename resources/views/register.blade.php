@@ -162,8 +162,16 @@
                     <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    Republic Act No. 10173, also known as the Data Privacy Act of 2012 (DPA), aims to protect personal
+                    data in information and communications systems both in the government and the private sector. The
+                    DPA created the National Privacy Commission (NPC) which is tasked to monitor its implementation. It
+                    covers the processing of personal information and sensitive personal information and sets, as its
+                    basic premise, the grant of direct consent by a data subject before data processing of personal
+                    information be allowed.
+
+                    <br><br>
                     I confirm that the personal data provided here in true and connect to the nest of my knowledge and i
-                    allow the DepEd to use my child's learner profile in blank
+                    allow the San Francisco ng Assisi Parish to use my information.
                     <br>
                     <br>
                     <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Confirm</button>
