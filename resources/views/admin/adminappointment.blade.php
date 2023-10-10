@@ -257,7 +257,7 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                Generate Certificate for this event and email it to the user?
+                Approve this certificate?
                 <form action="/approved_certi" method="post">
                     @csrf
                     <input type="hidden" name="id" id="id">
