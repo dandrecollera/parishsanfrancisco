@@ -239,8 +239,8 @@
                                                                 <p style="line-height: 100%;"> </p>
                                                                 <p style="line-height: 100%;">Your certificate is
                                                                     approved:</p><br>
-                                                                You can now proceed to our facility to obtain the
-                                                                certificate
+                                                                <a href="{{$link}}" target="_blank">CLICK HERE
+                                                                    for the PDF</a>
                                                             </div>
 
                                                         </td>

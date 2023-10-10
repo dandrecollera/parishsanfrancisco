@@ -136,7 +136,7 @@ class UserController extends Controller
         $data['userinfo'] = $userinfo = $request->get('userinfo');
 
         $data['notiflist'] = [
-            1 => 'Request Sent, wait for confirmation.',
+            1 => 'Request Sent, wait 2-3 days for your certificate to be ready for releasing at Parish office.',
         ];
         $data['notif'] = 0;
         if(!empty($_GET['n'])){
