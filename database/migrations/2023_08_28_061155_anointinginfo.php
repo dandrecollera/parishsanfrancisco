@@ -21,7 +21,6 @@ class Anointinginfo extends Migration
             $table->string('gender');
             $table->date('dateofbirth');
             $table->string('address');
-            $table->string('requirement');
             $table->decimal('payment', 10, 2);
             $table->string('paymentimage');
             $table->timestamps();

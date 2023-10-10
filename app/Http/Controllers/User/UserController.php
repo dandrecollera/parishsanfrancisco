@@ -404,7 +404,6 @@ class UserController extends Controller
                 'gender' => $input['gender'],
                 'dateofbirth' => $input['datebirth'],
                 'address' => $input['address'],
-                'requirement' => $this->fileProcess($request->file('requirement'), 'anointing', 'requirement', $userinfo[0]),
                 'payment' => $input['amount'],
                 'paymentimage' => $this->fileProcess($request->file('receipt'), 'anointing', 'receipt', $userinfo[0]),
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -453,7 +452,7 @@ class UserController extends Controller
         $info = DB::table('blessinginfo')
             ->insertGetID([
                 'address' => $input['address'],
-                'requirement' => $this->fileProcess($request->file('requirement'), 'blessing', 'requirement', $userinfo[0]),
+                'requirement' => $input['otherblessing'],
                 'payment' => $input['amount'],
                 'paymentimage' => $this->fileProcess($request->file('receipt'), 'blessing', 'receipt', $userinfo[0]),
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -562,6 +561,7 @@ class UserController extends Controller
                 'no_of_male' => $input['male'],
                 'no_of_female' => $input['female'],
                 'requirement' => $this->fileProcess($request->file('requirement'), 'communion', 'requirement', $userinfo[0]),
+                'requirement2' => $this->fileProcess($request->file('requirement2'), 'communion', 'requirement', $userinfo[0], 2),
                 'payment' => $input['amount'],
                 'paymentimage' => $this->fileProcess($request->file('receipt'), 'communion', 'receipt', $userinfo[0]),
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -626,6 +626,9 @@ class UserController extends Controller
                 'groomemail' => $input['gemail'],
                 'groomaddress' => $input['gaddress'],
                 'requirement' => $this->fileProcess($request->file('requirement'), 'wedding', 'requirement', $userinfo[0]),
+                'requirement2' => $this->fileProcess($request->file('requirement2'), 'wedding', 'requirement', $userinfo[0], 2),
+                'requirement3' => $this->fileProcess($request->file('requirement3'), 'wedding', 'requirement', $userinfo[0], 3),
+                'requirement4' => $this->fileProcess($request->file('requirement4'), 'wedding', 'requirement', $userinfo[0], 4),
                 'payment' => $input['amount'],
                 'paymentimage' => $this->fileProcess($request->file('receipt'), 'wedding', 'receipt', $userinfo[0]),
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -664,7 +667,7 @@ class UserController extends Controller
         return redirect('/userhistory');
     }
 
-    public function fileProcess($input, $service, $type, $info) {
+    public function fileProcess($input, $service, $type, $info, $count = 0) {
         $photo = 'blank.jpg';
 
         $now = Carbon::now();
@@ -675,7 +678,11 @@ class UserController extends Controller
         if ($type == 'receipt') {
             $destinationPath = 'public/' . $service . '/receipt';
         } else {
-            $destinationPath = 'public/' . $service . '/requirement';
+            if($count > 0){
+                $destinationPath = 'public/' . $service . '/requirement' . $count;
+            } else {
+                $destinationPath = 'public/' . $service . '/requirement';
+            }
         }
 
         $image = $input;
@@ -807,7 +814,6 @@ class UserController extends Controller
                     'anointinginfo.gender',
                     'anointinginfo.dateofbirth',
                     'anointinginfo.address',
-                    'anointinginfo.requirement',
                     'anointinginfo.payment',
                     'anointinginfo.paymentimage',
                 ])
@@ -874,6 +880,7 @@ class UserController extends Controller
                     'communioninfo.no_of_male',
                     'communioninfo.no_of_female',
                     'communioninfo.requirement',
+                    'communioninfo.requirement2',
                     'communioninfo.payment',
                     'communioninfo.paymentimage',
                 ])
@@ -945,6 +952,9 @@ class UserController extends Controller
                     'weddinginfo.groomemail',
                     'weddinginfo.groomaddress',
                     'weddinginfo.requirement',
+                    'weddinginfo.requirement2',
+                    'weddinginfo.requirement3',
+                    'weddinginfo.requirement4',
                     'weddinginfo.payment',
                     'weddinginfo.paymentimage',
                 ])

@@ -93,7 +93,7 @@
 
 
 
-    <label for="InputGroupFile01" class="form-label">Requirement:</label>
+    <label for="InputGroupFile01" class="form-label">Baptismal Certificate(Original/Xerox):</label>
     <div class="input-group mb-3">
         <input type="file" name="requirement" class="form-control" id="inputGroupFile01" required>
     </div>

@@ -109,7 +109,7 @@
     <label class=" form-label" for="godmother">No. of Godmother</label>
 </div>
 
-<h5>Requirement</h5>
+<h5>Birth Certificate</h5>
 <a href="/storage/baptism/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
 
 
@@ -157,7 +157,7 @@
     <label class="form-label" for="address">Location of Interment</label>
 </div>
 
-<h5>Requirement</h5>
+<h5>Death Certificate</h5>
 <a href="/storage/funeral/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
 
 
@@ -176,9 +176,10 @@
     <label for="email" class="form-label">Price Amount*</label>
 </div>
 
-<h5>Requirement</h5>
-<a href="/storage/blessing/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
-
+<div class="form-outline mb-3">
+    <input type="text" class="form-control" name="amount" id="amount" required readonly value="{{$info->requirement}}">
+    <label for="email" class="form-label">Blessing Type</label>
+</div>
 
 <h5>Receipt</h5>
 <a href="/storage/blessing/receipt/{{$info->paymentimage}}" target="_blank">{{$info->paymentimage}}</a>
@@ -218,10 +219,6 @@
     <label class="form-label" for="address">Address</label>
 </div>
 
-<h5>Requirement</h5>
-<a href="/storage/anointing/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
-
-
 <h5>Receipt</h5>
 <a href="/storage/anointing/receipt/{{$info->paymentimage}}" target="_blank">{{$info->paymentimage}}</a>
 @endif
@@ -258,7 +255,7 @@
     <label class=" form-label" for="female">No. of Female*</label>
 </div>
 
-<h5>Requirement</h5>
+<h5>Baptismal Certificate</h5>
 <a href="/storage/kumpil/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
 
 
@@ -297,8 +294,11 @@
     <label class=" form-label" for="female">No. of Female*</label>
 </div>
 
-<h5>Requirement</h5>
+<h5>Baptismal Certificate</h5>
 <a href="/storage/communion/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
+
+<h5>Birth Certificate</h5>
+<a href="/storage/communion/requirement2/{{$info->requirement2}}" target="_blank">{{$info->requirement}}</a>
 
 
 <h5>Receipt</h5>
@@ -402,8 +402,17 @@
     <label class="form-label" for="baddress">Address*</label>
 </div>
 
-<h5>Requirement</h5>
+<h5>Baptismal Certificate</h5>
 <a href="/storage/wedding/requirement/{{$info->requirement}}" target="_blank">{{$info->requirement}}</a>
+
+<h5>Confirmation Certificate</h5>
+<a href="/storage/wedding/requirement2/{{$info->requirement2}}" target="_blank">{{$info->requirement}}</a>
+
+<h5>CENOMAR</h5>
+<a href="/storage/wedding/requirement3/{{$info->requirement3}}" target="_blank">{{$info->requirement}}</a>
+
+<h5>Marriage License or Marriage Contract</h5>
+<a href="/storage/wedding/requirement4/{{$info->requirement4}}" target="_blank">{{$info->requirement}}</a>
 
 
 <h5>Receipt</h5>

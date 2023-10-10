@@ -18,14 +18,15 @@ class Announcements extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('subject');
-            $table->unsignedBigInteger('volunteerid');
+            $table->string('volunteerid')->nullable();
+            $table->unsignedBigInteger('priestid');
             $table->string('facebook');
             $table->string('instagram');
             $table->string('twitter');
             $table->string('youtube');
             $table->timestamps();
 
-            $table->foreign('volunteerid')->references('id')->on('volunteers')->onDelete('cascade');
+            $table->foreign('priestid')->references('id')->on('priests')->onDelete('cascade');
 
         });
     }

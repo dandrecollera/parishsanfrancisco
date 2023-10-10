@@ -58,7 +58,23 @@
             <div>Sat</div>
         </div>
         <div class="days mb-3" id="calendarDays"></div>
+        <h6>Legend</h6>
+        <div class="d-flex overflow-scroll">
+            <div class="d-flex align-items-center me-3">
+                <div style="width: 20px; height: 20px; background-color:#6EC9FF" class="me-2"></div>
+                <span style="font-size: 13px">Regular</span>
+            </div>
 
+            <div class="d-flex align-items-center me-3">
+                <div style="width: 20px; height: 20px; background-color:#FF5252" class="me-2"></div>
+                <span style="font-size: 13px">Community</span>
+            </div>
+
+            <div class="d-flex align-items-center me-3">
+                <div style="width: 20px; height: 20px; background-color:#F4FE28" class="me-2"> </div>
+                <span style="font-size: 13px">Special</span>
+            </div>
+        </div>
         <div id="daytime" hidden>
             <hr>
             <h4 id="themonth">test</h4>

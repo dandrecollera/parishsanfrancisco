@@ -41,14 +41,17 @@ class AnnouncementController extends Controller
         $data['userinfo'] = $userinfo = $request->get('userinfo');
         $input = $request->input();
 
+
         // dd($input);
+        // dd(implode(',', $input['position']));
 
         DB::table('announcement')
             ->insert([
                 'title' => $input['title'],
                 'content' => $input['content'],
                 'subject' => $input['subject'],
-                'volunteerid' => $input['position'],
+                'volunteerid' => implode(',', $input['position']),
+                'priestid' => $input['priest'],
                 'facebook' => $input['facebook'],
                 'instagram' => $input['instagram'],
                 'twitter' => $input['twitter'],

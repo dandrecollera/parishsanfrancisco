@@ -152,6 +152,28 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addeditmodal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addeditmodalLabel">
+                        <div>Data Privacy</div>
+                    </h1>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    I confirm that the personal data provided here in true and connect to the nest of my knowledge and i
+                    allow the DepEd to use my child's learner profile in blank
+                    <br>
+                    <br>
+                    <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Confirm</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
     <script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
     <script src="{{asset('js/mdb.min.js')}}"></script>
 
@@ -193,7 +215,30 @@
                     $('#municipality').html(options);
                 });
             });
+            $('button[type="submit"]').on('click', function(e){
+                e.preventDefault();
+
+                if(validateForm()){
+                    $('#addeditmodal').modal('show');
+                }
+            })
+
+            $('#addeditmodal button[data-mdb-dismiss="modal"]').on('click', function() {
+                // Proceed with form submission (triggering the form submission programmatically)
+                $('form').submit();
+            });
         });
+
+        function validateForm(){
+            var isValid = true;
+            $('input[required]').each(function(){
+                if(!$(this).val()){
+                    isValid = false;
+                    return false;
+                }
+            });
+            return isValid;
+        }
     </script>
 
 </body>

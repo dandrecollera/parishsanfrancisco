@@ -22,6 +22,7 @@ class Communioninfo extends Migration
             $table->integer('no_of_male');
             $table->integer('no_of_female');
             $table->string('requirement');
+            $table->string('requirement2');
             $table->decimal('payment', 10, 2);
             $table->string('paymentimage');
             $table->timestamps();

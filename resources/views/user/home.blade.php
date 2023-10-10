@@ -134,10 +134,6 @@
                                 ->leftjoin('volunteers', 'volunteers.id', '=', 'announcement.volunteerid')
                                 ->select([
                                 'announcement.*',
-                                'volunteers.firstname',
-                                'volunteers.middlename',
-                                'volunteers.lastname',
-                                'volunteers.ministry',
                                 ])
                                 ->orderBy('announcement.id', 'desc')
                                 ->first();
@@ -161,16 +157,43 @@
                                 <h6>{{$dbr->subject}}</h6>
                                 <p>{{$dbr->content}}</p>
                                 <hr>
-                                <h4>Volunteer</h4>
+                                <h4>Priest</h4>
                                 @php
-                                $ministries = explode(', ', $dbr->ministry);
+                                $priest = DB::table('priests')
+                                ->where('id', $dbr->priestid)
+                                ->first();
                                 @endphp
-                                <h5>
-                                    {{$dbr->firstname}} {{$dbr->middlename}} {{$dbr->lastname}}
 
+                                <h5>
+                                    {{$priest->firstname}}
+                                    {{$priest->middlename}}
+                                    {{$priest->lastname}}
                                 </h5>
-                                @foreach ($ministries as $min)
-                                {{$min}}
+                                <hr>
+                                <h4>Volunteers</h4>
+
+                                @php
+                                $volunts = explode(',', $dbr->volunteerid);
+                                @endphp
+                                @foreach ($volunts as $vols)
+                                @php
+                                $vol = DB::table('volunteers')
+                                ->where('id', $vols)
+                                ->first();
+                                @endphp
+
+                                <h5>
+                                    {{$vol->firstname}} {{$vol->middlename}} {{$vol->lastname}}
+                                </h5>
+                                @php
+                                $ministries = explode(', ', $vol->ministry);
+                                @endphp
+
+                                <p class="mb-4">
+                                    @foreach ($ministries as $min)
+                                    {{$min}}
+                                    @endforeach
+                                </p>
                                 @endforeach
 
                                 @endif
@@ -225,7 +248,7 @@
                                             <h5 class="card-title">{{$db->title}}</h5>
                                             <p class="card-text card-text-sp">
                                                 {{$db->content}}</p>
-                                            <a href="/usernewsarticle?id={{$db->id}}" class="btn btn-sm btn-primary">See
+                                            <a href="/newsarticle?id={{$db->id}}" class="btn btn-sm btn-primary">See
                                                 More</a>
                                         </div>
                                     </div>

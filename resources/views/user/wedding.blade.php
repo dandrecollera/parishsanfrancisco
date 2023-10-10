@@ -177,9 +177,24 @@
         <label class="form-label" for="gaddress">Address*</label>
     </div>
 
-    <label for="InputGroupFile01" class="form-label">Requirement:</label>
+    <label for="InputGroupFile01" class="form-label">Baptismal Certificate:</label>
     <div class="input-group mb-3">
         <input type="file" name="requirement" class="form-control" id="inputGroupFile01" required>
+    </div>
+
+    <label for="InputGroupFile01" class="form-label">Confirmation Certificate:</label>
+    <div class="input-group mb-3">
+        <input type="file" name="requirement2" class="form-control" id="inputGroupFile01" required>
+    </div>
+
+    <label for="InputGroupFile01" class="form-label">CENOMAR:</label>
+    <div class="input-group mb-3">
+        <input type="file" name="requirement3" class="form-control" id="inputGroupFile01" required>
+    </div>
+
+    <label for="InputGroupFile01" class="form-label">Marriage License or Marriage Contract:</label>
+    <div class="input-group mb-3">
+        <input type="file" name="requirement4" class="form-control" id="inputGroupFile01" required>
     </div>
 
     <input type="hidden" name="sid" value="{{$date->id}}">

@@ -34,9 +34,9 @@
             <label for="subject" class="form-label">Subject*</label>
         </div>
 
-        <h4>Volunteer</h4>
+        <h4>Volunteers</h4>
         <div class="input-group mb-3">
-            <select name="position" id="position" class="form-select" required>
+            <select name="position[]" id="position" class="form-select" required multiple>
                 <option selected hidden value="">Select Volunteer*</option>
                 @php
                 $dbr = DB::table('volunteers')
@@ -45,6 +45,22 @@
                 ->toArray();
                 @endphp
                 @foreach ($dbr as $db)
+                <option value="{{$db->id}}">{{$db->firstname}} {{$db->middlename}} {{$db->lastname}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <h4>Priest</h4>
+        <div class="input-group mb-3">
+            <select name="priest" id="position" class="form-select" required>
+                <option selected hidden value="">Select Priest*</option>
+                @php
+                $dbre = DB::table('priests')
+                ->where('status', 'active')
+                ->get()
+                ->toArray();
+                @endphp
+                @foreach ($dbre as $db)
                 <option value="{{$db->id}}">{{$db->firstname}} {{$db->middlename}} {{$db->lastname}}</option>
                 @endforeach
             </select>

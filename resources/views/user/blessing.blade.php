@@ -63,10 +63,24 @@
         <label class="form-label" for="address">Address*</label>
     </div>
 
-    <label for="InputGroupFile01" class="form-label">Requirement:</label>
-    <div class="input-group mb-3">
-        <input type="file" name="requirement" class="form-control" id="inputGroupFile01" required>
+    <label class=" form-label">Type of Blessing*</label>
+    <div class="input-group mb-2" role="group">
+        <select name="blessingtype" id="blessingtype" class="form-select" required>
+            <option value="" hidden>Select*</option>
+            <option value="House">House</option>
+            <option value="Business">Business</option>
+            <option value="Vehicle">Vehicle</option>
+            <option value="Other">Other</option>
+        </select>
     </div>
+
+    <div class="form-outline" id="otherblessingcont" hidden>
+        <input type="text" class="form-control" name="otherblessing" id="otherblessing" required value="">
+        <label class="form-label" for="otherblessing">Other*</label>
+    </div>
+
+    <p style="font-size: 10px; color: rgb(197, 197, 197)">Schedule at least 1 day before<br>For Home Blessing: Schedule
+        at least 2 days before</p>
 
     <input type="hidden" name="sid" value="{{$date->id}}">
     <button type="button" class="btn btn-primary mt-3 mb-3 float-end" data-mdb-toggle="modal"
@@ -104,3 +118,26 @@
     </div>
 </form>
 @endsection
+
+@push('jsscripts')
+<script>
+    $(document).ready(function () {
+        // Get the select element and the otherblessing input
+        var serviceSelect = $('#blessingtype');
+        var otherblessingInput = $('#otherblessingcont');
+
+        // Add an event listener to the select element
+        serviceSelect.change(function () {
+            // Check if the selected value is "Other"
+            if (serviceSelect.val() === 'Other') {
+                // Show the otherblessing input
+                otherblessingInput.removeAttr('hidden');
+            } else {
+                // Hide the otherblessing input and reset its value
+                otherblessingInput.attr('hidden', true);
+                $('#otherblessing').val($('#blessingtype').val());
+            }
+        });
+    });
+</script>
+@endpush

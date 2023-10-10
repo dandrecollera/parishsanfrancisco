@@ -99,7 +99,7 @@
         <label class="form-label" for="address">Location of Interment*</label>
     </div>
 
-    <label for="InputGroupFile01" class="form-label">Requirement:</label>
+    <label for="InputGroupFile01" class="form-label">Death Certificate (Original/Xerox):</label>
     <div class="input-group mb-3">
         <input type="file" name="requirement" class="form-control" id="inputGroupFile01" required>
     </div>

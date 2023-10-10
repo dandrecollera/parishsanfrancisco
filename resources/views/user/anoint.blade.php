@@ -94,11 +94,11 @@
         <label class="form-label" for="address">Address*</label>
     </div>
 
-    <label for="InputGroupFile01" class="form-label">Requirement:</label>
-    <div class="input-group mb-3">
-        <input type="file" name="requirement" class="form-control" id="inputGroupFile01" required>
-    </div>
-
+    <p style="font-size: 10px; color: rgb(197, 197, 197)">
+        Requirements:<br>
+        1. Start of serious illness, not when about to die<br>
+        2. Sick person wants it<br>
+        3. If confessing, patient must be able to communicate</p>
 
     <input type="hidden" name="sid" value="{{$date->id}}">
     <button type="button" class="btn btn-primary mt-3 mb-3 float-end" data-mdb-toggle="modal"

@@ -290,7 +290,6 @@ class AppointmentController extends Controller
                     'anointinginfo.gender',
                     'anointinginfo.dateofbirth',
                     'anointinginfo.address',
-                    'anointinginfo.requirement',
                     'anointinginfo.payment',
                     'anointinginfo.paymentimage',
                 ])
@@ -357,6 +356,7 @@ class AppointmentController extends Controller
                     'communioninfo.no_of_male',
                     'communioninfo.no_of_female',
                     'communioninfo.requirement',
+                    'communioninfo.requirement2',
                     'communioninfo.payment',
                     'communioninfo.paymentimage',
                 ])
@@ -428,6 +428,9 @@ class AppointmentController extends Controller
                     'weddinginfo.groomemail',
                     'weddinginfo.groomaddress',
                     'weddinginfo.requirement',
+                    'weddinginfo.requirement2',
+                    'weddinginfo.requirement3',
+                    'weddinginfo.requirement4',
                     'weddinginfo.payment',
                     'weddinginfo.paymentimage',
                 ])
@@ -686,7 +689,6 @@ class AppointmentController extends Controller
                     'anointinginfo.gender',
                     'anointinginfo.dateofbirth',
                     'anointinginfo.address',
-                    'anointinginfo.requirement',
                     'anointinginfo.payment',
                     'anointinginfo.paymentimage',
                 ])

@@ -35,6 +35,9 @@ class Weddinginfo extends Migration
             $table->string('groomaddress');
 
             $table->string('requirement');
+            $table->string('requirement2');
+            $table->string('requirement3');
+            $table->string('requirement4');
             $table->decimal('payment', 10, 2);
             $table->string('paymentimage');
             $table->timestamps();
